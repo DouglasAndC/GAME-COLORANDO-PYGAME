@@ -5,7 +5,7 @@ from Mapa import *
 
 pygame.init()
 SCREEN_SIZE = (1000,400)
-screen = pygame.display.set_mode(SCREEN_SIZE, 0 ,8)
+screen = pygame.display.set_mode(SCREEN_SIZE, 0 ,16)
 
 mapa = Mapa('Data\mapa')
 
