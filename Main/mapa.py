@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-class Mapa(object):
+class mapa(object):
     def __init__(self, caminho):
         self.value = self.ler_mapa(caminho)
         self.img_sub = self.criar_imgs('sub')

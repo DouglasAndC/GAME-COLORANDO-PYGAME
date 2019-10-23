@@ -1,13 +1,13 @@
 import pygame
 from pygame.locals import *
 from sys import exit
-from Mapa import *
+from mapa import *
 
 pygame.init()
 SCREEN_SIZE = (1000,400)
 screen = pygame.display.set_mode(SCREEN_SIZE, 0 ,16)
 
-mapa = Mapa('Data\mapa')
+mapa = mapa('Data\mapa')
 
 moving_right = False
 moving_left = False
