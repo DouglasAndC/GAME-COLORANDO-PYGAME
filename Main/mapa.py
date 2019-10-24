@@ -1,7 +1,7 @@
 import pygame
 import os
 from pygame.locals import *
-import globals
+import globals 
 
 
 class mapa(object):
