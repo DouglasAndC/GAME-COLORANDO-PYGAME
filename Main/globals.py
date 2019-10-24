@@ -1,5 +1,6 @@
 import os
 def get_path():
-    os.chdir("../")
-    print(os.getcwd())
+    os.chdir(os.getcwd())
+    if(os.getcwd().__contains__('\\Main')):
+        os.chdir('../')
     return os.getcwd()
