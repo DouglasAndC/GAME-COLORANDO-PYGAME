@@ -17,7 +17,6 @@ class mapa(object):
 
     def ler_mapa(self, caminho):
         path = globals.get_path()
-        print(path + "\\" + caminho + '.txt')
         arquivo_mapa = open(path + "\\" + caminho + '.txt', 'r')
         linha = arquivo_mapa.read()
         arquivo_mapa.close()
@@ -28,4 +27,4 @@ class mapa(object):
         return mapa_lido
 
     def criar_imgs(self, nome):
-        return pygame.image.load(os.getcwd() + '\\View\\' + nome + '.png').convert()
+        return pygame.image.load(globals.get_path() + '\\View\\' + nome + '.png').convert()
