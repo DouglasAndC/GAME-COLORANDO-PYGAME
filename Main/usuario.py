@@ -1,6 +1,6 @@
 import pickle
 import globals
-
+import json
 class usuario(object):
 
     def __init__(self, nome):
@@ -12,29 +12,30 @@ class usuario(object):
         return "nome: %s; score: %s; level: %i" % (self.nome,self.score,self.level)
     
     def ler_usuario(self):
+        data = {}
         try:
-            with open(globals.get_path()+'\Data\data.json', 'rb') as f:
-                self.data = pickle.load(f)
-            return True
+            with open(globals.get_path()+'\Data\data.pickle', 'rb') as f:
+                data = pickle.load(f)
+            return data
         except Exception as e:
             print(e)
-        f.close()
-        return False
+        return data
     
     def salvar_usuario(self):
+        user=[{"nome":self.nome,"score":self.score,"level":self.level}]
         try:
-            with open(globals.get_path()+'\Data\data.json', 'wb') as f:
-                pickle.dump(self.data, f, pickle.HIGHEST_PROTOCOL)
+            with open(globals.get_path()+'\Data\data.pickle', 'wb') as f:
+                pickle.dump(user, f, pickle.HIGHEST_PROTOCOL)
             return True
         except Exception as e:
             print(e)
         return False
     
     def calcular_posicao(self):
-        for i in sorted (self.data.keys()) :  
-            print(i, end = " ") 
+        data = self.ler_usuario()
+        for i in sorted (data.keys().__getitem__('score')) :  
+            print(i, end = " ")
 
-Testando = usuario("Douglas")
-mapa_data = Testando.save()
-print('teste')
-
+user1 = usuario('Douglas')
+user1.salvar_usuario()
+user1.calcular_posicao()
