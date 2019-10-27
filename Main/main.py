@@ -4,19 +4,20 @@ from sys import exit
 from mapa import *
 
 pygame.init()
-SCREEN_SIZE = (1000,400)
+SCREEN_SIZE = (1000,500)
 screen = pygame.display.set_mode(SCREEN_SIZE, 0 ,16)
+
+display = pygame.Surface((400,200))
 
 mapa = mapa('Data\mapa')
 
 moving_right = False
 moving_left = False
-vertical_momentum = 0
-air_timer = 0
+frame_user = 0
 
 true_scroll = [0,0]
 
-player_rect = pygame.Rect(100,100,5,13)
+player_rect = pygame.Rect(75,75,5,13)
 
 def desenhar_mapa(mapa):
        tile_rects = []
@@ -25,31 +26,41 @@ def desenhar_mapa(mapa):
         x = 0
         for celula in linha:
             if celula == '1':
-                screen.blit(mapa.img_sub,(x*32,y*32))
+                display.blit(mapa.img_sub,(x*32,y*32))
             if celula == '2':
-                screen.blit(mapa.img_sup,(x*32,y*32))
+                display.blit(mapa.img_sup,(x*32,y*32))
             if celula == '3':
-                screen.blit(mapa.img_triangulo_p1,(x*32,y*32))
+                display.blit(mapa.img_triangulo_p1,(x*32,y*32))
             if celula == '4':
-                screen.blit(mapa.img_triangulo_p2,(x*32,y*32))
+                display.blit(mapa.img_triangulo_p2,(x*32,y*32))
             if celula == '5':
-                screen.blit(mapa.img_trapezio_p1,(x*32,y*32))
+                display.blit(mapa.img_trapezio_p1,(x*32,y*32))
             if celula == '6':
-                screen.blit(mapa.img_trapezio_p2,(x*32,y*32))
+                display.blit(mapa.img_trapezio_p2,(x*32,y*32))
             if celula == '7':
-                screen.blit(mapa.img_trapezio_p3,(x*32,y*32))
+                display.blit(mapa.img_trapezio_p3,(x*32,y*32))
             if celula != '0':
                 tile_rects.append(pygame.Rect(x*32,y*32,32,32))
             x += 1
         y += 1
 
 while True:
-
+    display.fill((146,244,255))
+    
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             exit()
-
+    
+    display.fill((146,244,255))
+    img = pygame.image.load(globals.get_path() + "\\View\\user_"+str(frame_user)+".png").convert_alpha()
+    display.blit(img,(100+globals.speed,140))
+    globals.speed+=1
+    if(frame_user == 4):
+        frame_user=0
+    else:
+        frame_user-=-1
     desenhar_mapa(mapa)
-
+    display.blit(mapa.img_sol,(300,10))
+    screen.blit(pygame.transform.scale(display,SCREEN_SIZE),(0,0))
     pygame.display.update()
