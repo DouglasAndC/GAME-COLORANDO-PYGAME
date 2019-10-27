@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from pygame_functions import *
 import globals
 pygame.init()
  
@@ -7,6 +8,8 @@ screen_largura = 800
 screen_altura = 700
 global cont
 cont = 1
+textboxGroup = pygame.sprite.OrderedUpdates()
+screenRefresh = True
 BLACK = (0,0,0)
 BLUE = (0, 0, 255)
 WHITE = (255,255,255)
@@ -37,8 +40,7 @@ def titulo():
     screen.blit(novo_titulo,(210,50))
 
 def botoesMenu(color,x,y,width,height):
-    return pygame.draw.rect(screen, color, [x, y, width, height])
-    
+    return pygame.draw.rect(screen, color, [x, y, width, height])        
 
 def menu():
     titulo()
@@ -63,7 +65,7 @@ def botaoVoltar():
     btn6 = botoesMenu(BLACK,300,500,372/2,149/2)
     screen.blit(dimensao_botao('btnVoltar'),(300,500))
     if btn6.collidepoint(pos) and pressed1:
-        jogar()
+        screen.fill((0, 0, 0))
         pygame.display.flip()
         menu()
         pygame.display.flip()
@@ -80,7 +82,7 @@ def primeiro():
         contatos()
         return 1
     elif menu_botoes[2].collidepoint(pos) and pressed1:
-        jogar()
+        placar()
         return 1
     elif menu_botoes[3].collidepoint(pos) and pressed1:
         pygame.quit()
@@ -95,9 +97,18 @@ def jogar():
     btn1 = botoesMenu(BLACK,300,400,372/2,149/2)
     screen.blit(dimensao_botao('btnJogar'),(300,400))
     tituloJ = pygame.image.load(globals.get_path()+'\\View\\menu\\txtSeuNome.png').convert_alpha()
-    screen.blit(tituloJ,(150,50))
+    novo_tituoj = pygame.transform.scale(tituloJ,(int(1036/2), int(264/2)))
+    screen.blit(novo_tituoj,(180,50))
+    
    
+def placar():
+    placar = pygame.image.load(globals.get_path()+'\\View\\menu\\txtPlacar.png').convert_alpha()
+    print(placar.get_size())
+    novo_placar = pygame.transform.scale(placar,(int(406/2), int(264/2)))
+    screen.fill((0, 0, 0))
+    screen.blit(novo_placar,(290,50))
 
+    
 menu()
 
 pygame.display.flip()
@@ -112,7 +123,7 @@ while True:
     if cont == 1:
         cont = cont + primeiro()
     elif cont == 2:
-        cont = cont - botaoVoltar() 
+        cont = cont - botaoVoltar()
     print(cont)
     pygame.display.flip()
     for event in pygame.event.get():
