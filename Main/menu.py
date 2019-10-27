@@ -5,6 +5,7 @@ pygame.init()
  
 screen_largura = 800
 screen_altura = 700
+global cont
 cont = 1
 BLACK = (0,0,0)
 BLUE = (0, 0, 255)
@@ -43,15 +44,13 @@ def menu():
     titulo()
     btn1 = botoesMenu(BLACK,300,200,372/2,149/2)
     screen.blit(dimensao_botao('btnJogar'),(300,200))
-    btn2 = botoesMenu(BLACK,300,300,372/2,149/2)    
-    screen.blit(dimensao_botao('btnRegras'),(300,300))
+    btn2 = botoesMenu(BLACK,300,300,372/2,149/2)
+    screen.blit(dimensao_botao('btnContato'),(300,300))
     btn3 = botoesMenu(BLACK,300,400,372/2,149/2)
-    screen.blit(dimensao_botao('btnContato'),(300,400))
-    btn4 = botoesMenu(BLACK,300,500,372/2,149/2)
-    screen.blit(dimensao_botao('btnPlacar'),(300,500))
-    btn5 = botoesMenu(BLACK,300,600,372/2,149/2)
+    screen.blit(dimensao_botao('btnPlacar'),(300,400))
+    btn4 = botoesMenu(BLACK,300,600,372/2,149/2)
     screen.blit(dimensao_botao('btnSair'),(300,600))
-    return (btn1,btn2,btn3,btn4,btn5)
+    return (btn1,btn2,btn3,btn4)
 
 
 def contatos():
@@ -59,29 +58,45 @@ def contatos():
     novo_aut = pygame.transform.scale(aut,(int(940/2), int(620/2)))
     screen.fill((0, 0, 0))
     screen.blit(novo_aut,(250,100))
-    btn6 = botoesMenu(BLACK,300,600,372/2,149/2)
+
+def botaoVoltar():
+    btn6 = botoesMenu(BLACK,300,500,372/2,149/2)
     screen.blit(dimensao_botao('btnVoltar'),(300,500))
+    if btn6.collidepoint(pos) and pressed1:
+        jogar()
+        pygame.display.flip()
+        menu()
+        pygame.display.flip()
+        return 1
+    else:
+        return 0
+    
     
 def primeiro():
     if menu_botoes[0].collidepoint(pos) and pressed1:
         jogar()
-        cont=+1
-    if menu_botoes[1].collidepoint(pos) and pressed1:
-        jogar()
-        cont=+1
-    if menu_botoes[2].collidepoint(pos) and pressed1:
+        return 1
+    elif menu_botoes[1].collidepoint(pos) and pressed1:
         contatos()
-        cont=+1
-    if menu_botoes[3].collidepoint(pos) and pressed1:
+        return 1
+    elif menu_botoes[2].collidepoint(pos) and pressed1:
         jogar()
-        cont=+1
-    if menu_botoes[4].collidepoint(pos) and pressed1:
+        return 1
+    elif menu_botoes[3].collidepoint(pos) and pressed1:
         pygame.quit()
         exit()
-    
-    
-def jogar():
+    else:
+        return 0        
+
+            
+
+def jogar():           
     screen.fill((0, 0, 0))
+    btn1 = botoesMenu(BLACK,300,400,372/2,149/2)
+    screen.blit(dimensao_botao('btnJogar'),(300,400))
+    tituloJ = pygame.image.load(globals.get_path()+'\\View\\menu\\txtSeuNome.png').convert_alpha()
+    screen.blit(tituloJ,(150,50))
+   
 
 menu()
 
@@ -89,13 +104,19 @@ pygame.display.flip()
 
 menu_botoes = menu()
 
+tela = True
+
 while True:
     pos = pygame.mouse.get_pos()
     pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
-    if(cont == 1):
-        primeiro()
-    pygame.display.flip()            
+    if cont == 1:
+        cont = cont + primeiro()
+    elif cont == 2:
+        cont = cont - botaoVoltar() 
+    print(cont)
+    pygame.display.flip()
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             exit()
+            
