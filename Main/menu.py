@@ -108,6 +108,8 @@ def jogar():
                 print(valor)
                 if valor >= 97 and valor <= 122:
                     texto.append(chr(valor))
+                elif valor>=49 and valor <= 57:
+                    texto.append(chr(valor))
                 elif valor == 32:
                     texto.append(" ")
                 elif valor == 8:
@@ -121,7 +123,6 @@ def jogar():
    
 def placar():
     placar = pygame.image.load(globals.get_path()+'\\View\\menu\\txtPlacar.png').convert_alpha()
-    print(placar.get_size())
     novo_placar = pygame.transform.scale(placar,(int(406/2), int(264/2)))
     screen.fill((0, 0, 0))
     screen.blit(novo_placar,(290,50))
