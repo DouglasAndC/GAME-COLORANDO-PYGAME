@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from pygame_functions import *
+from pygame import *
 import globals
 pygame.init()
  
@@ -92,14 +92,32 @@ def primeiro():
 
             
 
-def jogar():           
+def jogar():
+    texto = []
     screen.fill((0, 0, 0))
     btn1 = botoesMenu(BLACK,300,400,372/2,149/2)
+    pygame.draw.rect(screen, (255,255,255),(250, 200, 300, 30))
     screen.blit(dimensao_botao('btnJogar'),(300,400))
     tituloJ = pygame.image.load(globals.get_path()+'\\View\\menu\\txtSeuNome.png').convert_alpha()
     novo_tituoj = pygame.transform.scale(tituloJ,(int(1036/2), int(264/2)))
     screen.blit(novo_tituoj,(180,50))
-    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                valor = event.key
+                print(valor)
+                if valor >= 97 and valor <= 122:
+                    texto.append(chr(valor))
+                elif valor == 32:
+                    texto.append(" ")
+                elif valor == 8:
+                    if(len(texto)>0):
+                        texto.pop()
+        font = pygame.font.Font(pygame.font.match_font("Arial"), 24)
+        pygame.draw.rect(screen, (255,255,255),(250, 200, 300, 30))
+        newSurface = font.render(globals.convert(texto), True, (0,0,0))
+        screen.blit(newSurface,(250, 200))
+        pygame.display.update()
    
 def placar():
     placar = pygame.image.load(globals.get_path()+'\\View\\menu\\txtPlacar.png').convert_alpha()
@@ -124,7 +142,6 @@ while True:
         cont = cont + primeiro()
     elif cont == 2:
         cont = cont - botaoVoltar()
-    print(cont)
     pygame.display.flip()
     for event in pygame.event.get():
         if event.type == QUIT:
