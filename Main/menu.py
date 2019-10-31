@@ -93,6 +93,7 @@ def primeiro():
     pygame.display.update()
     if menu_botoes[0].collidepoint(pos) and pressed1:
         globals.salvar_usuario(jogar())
+        return 4
     elif menu_botoes[1].collidepoint(pos) and pressed1:
         contatos()
         return 1
@@ -200,7 +201,9 @@ while True:
     elif cont == 3:
         cont= cont + 2
     elif cont == 4:
-        cont = cont - placar()       
+        cont = cont - placar()
+    elif cont == 5:
+        break
     pygame.display.flip()
     pygame.display.update()
     for event in pygame.event.get():
