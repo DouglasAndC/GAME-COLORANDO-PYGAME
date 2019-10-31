@@ -55,14 +55,16 @@ while True:
     
     display.fill((146,244,255))
     img = pygame.image.load(globals.get_path() + "\\View\\user_"+str(frame_user)+".png").convert_alpha()
-    display.blit(img,(x_user+globals.speed,y_user))
-    globals.speed+=4
+    globals.speed=4
+    x_user+=globals.speed
+    display.blit(img,(x_user,y_user))
     if(frame_user == 4):
         frame_user=2
     else:
         frame_user-=-1
-    if(x_user>=display.x):
-        display+=400,200
+    if(x_user>=400):
+        x_user=0
+        display=pygame.Surface((600,400))
     desenhar_mapa(mapa)
     display.blit(mapa.img_sol,(300,10))
     screen.blit(pygame.transform.scale(display,SCREEN_SIZE),(0,0))
