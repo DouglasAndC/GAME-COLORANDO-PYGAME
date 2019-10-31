@@ -1,6 +1,7 @@
 import os
 import pickle
 import json
+import usuario
 
 def get_path():
     os.chdir(os.getcwd())
@@ -27,9 +28,9 @@ def ler_usuario():
         print(e)
     return data
 
-def salvar_usuario(user):
+def salvar_usuario(user_name):
     data=ler_usuario()
-    data.append(user)
+    data.append(usuario(user_name))
     if(len(data)>1):
         data.sort(key=lambda x: x.score, reverse=True)
     try:
