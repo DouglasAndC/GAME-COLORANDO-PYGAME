@@ -1,7 +1,7 @@
 import os
 import pickle
 import json
-import usuario
+from usuario import *
 
 def get_path():
     os.chdir(os.getcwd())
@@ -30,9 +30,10 @@ def ler_usuario():
 
 def salvar_usuario(user_name):
     data=ler_usuario()
-    data.append(usuario(user_name))
+    user1=usuario(user_name)
+    data.append({'level':user1.level,'nome':user1.nome,'score':user1.score})
     if(len(data)>1):
-        data.sort(key=lambda x: x.score, reverse=True)
+        data.sort(key=lambda x: x.get('score'), reverse=True)
     try:
         with open(get_path()+'\Data\data.pickle', 'wb') as f:
             pickle.dump(data, f, pickle.HIGHEST_PROTOCOL)
