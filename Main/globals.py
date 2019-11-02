@@ -30,9 +30,9 @@ def ler_usuario():
 
 def salvar_usuario(user_name):
     data=ler_usuario()
-    user1=usuario(user_name)
+    user1 = usuario(user_name)
     data.append({'level':user1.level,'nome':user1.nome,'score':user1.score})
-    if(len(data)>1):
+    if len(data)>1:
         data.sort(key=lambda x: x.get('score'), reverse=True)
     try:
         with open(get_path()+'\Data\data.pickle', 'wb') as f:
@@ -42,3 +42,7 @@ def salvar_usuario(user_name):
     except Exception as e:
         print(e)
     return False
+
+
+def misturar_cores(color1, color2):
+    return int((color1[0] + color2[0]) / 2), int((color1[1] + color2[1]) / 2), int((color1[2] + color2[2]) / 2)

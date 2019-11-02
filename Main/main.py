@@ -64,7 +64,8 @@ while True:
         frame_user-=-1
     if(x_user>=400):
         x_user=0
-        display=pygame.Surface((600,400))
+        display.unlock()
+        display.scroll(3-00,300)
     desenhar_mapa(mapa)
     display.blit(mapa.img_sol,(300,10))
     screen.blit(pygame.transform.scale(display,SCREEN_SIZE),(0,0))
