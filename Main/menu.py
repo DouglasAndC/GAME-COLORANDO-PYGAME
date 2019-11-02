@@ -92,7 +92,6 @@ def botaoVoltar():
 def primeiro():
     pygame.display.update()
     if menu_botoes[0].collidepoint(pos) and pressed1:
-        globals.salvar_usuario(jogar())
         return 4
     elif menu_botoes[1].collidepoint(pos) and pressed1:
         contatos()
@@ -109,6 +108,7 @@ def primeiro():
             
 
 def jogar():
+    global texto
     texto = []
     screen.fill((0, 0, 0))
     btn1 = botoesMenu(BLACK,300,400,372/2,149/2)
@@ -123,16 +123,18 @@ def jogar():
             screen.fill((0, 0, 0))            
             menu()
             pygame.display.flip()
-            break
+            return 0
         else:
             pygame.draw.rect(screen, (255,255,255),(250, 200, 300, 30))    
             for event in pygame.event.get():
                 pos = pygame.mouse.get_pos()
                 pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
                 btn6 = botoesMenu(BLACK,300,500,372/2,149/2)
-                btn1 = botoesMenu(BLACK,300,400,372/2,149/2)
+                if len(texto) != 0:
+                    btn1 = botoesMenu(BLACK,300,400,372/2,149/2)
                 screen.blit(background,(0,0))
-                screen.blit(dimensao_botao('btnJogar'),(300,400))
+                if len(texto) != 0:
+                    screen.blit(dimensao_botao('btnJogar'),(300,400))
                 tituloJ = pygame.image.load(globals.get_path()+'\\View\\menu\\txtSeuNome.png').convert_alpha()
                 novo_tituoj = pygame.transform.scale(tituloJ,(int(1036/2), int(264/2)))
                 screen.blit(novo_tituoj,(180,50))
@@ -151,8 +153,9 @@ def jogar():
                 elif event.type == QUIT:
                     pygame.quit()
                     exit()
-                elif btn1.collidepoint(pos) and pressed1:
-                    return globals.convert(texto)
+                elif len(texto) != 0:
+                    if btn1.collidepoint(pos) and pressed1:
+                        return globals.salvar_usuario(globals.convert(texto))
                 elif btn6.collidepoint(pos) and pressed1:
                     screen.fill((0, 0, 0))                    
                     pygame.display.flip()
@@ -194,6 +197,7 @@ tela = True
 while True:
     pos = pygame.mouse.get_pos()
     pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
+    print (cont)
     if cont == 1:
         cont = cont + primeiro()
     elif cont == 2:
@@ -203,7 +207,11 @@ while True:
     elif cont == 4:
         cont = cont - placar()
     elif cont == 5:
-        break
+            aux = jogar()
+            if aux == 0:
+                cont = cont - 4
+            else:
+                break
     pygame.display.flip()
     pygame.display.update()
     for event in pygame.event.get():
