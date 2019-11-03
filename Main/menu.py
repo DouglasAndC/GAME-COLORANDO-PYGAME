@@ -38,8 +38,8 @@ def printar_placar():
     y = 150
     iterator = 0
     for i in data:
-        iterator+=1
-        if iterator == 5:
+        iterator += 1
+        if iterator == 11:
             break
         campo_texto = [str(iterator)+'.']
         y += 25
