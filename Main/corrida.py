@@ -93,7 +93,6 @@ while True:
                 if event.key == K_UP:
                     pulo = True
        if(pulo == True):
-           print(aux)
            if(aux<11):
              aux = aux + 1
              y_user = y_user - 5
@@ -110,7 +109,6 @@ while True:
        img = pygame.image.load(globals.get_path() + "\\View\\user_"+str(frame_user)+".png").convert_alpha()
        globals.speed=6
        x_user+=globals.speed
-      
        display.blit(img,(x_user,y_user))
        if(pulo == True):
           frame_user = 1
