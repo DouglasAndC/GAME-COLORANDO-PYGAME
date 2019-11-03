@@ -36,8 +36,12 @@ def printar_placar():
     data = globals.ler_usuario()
     font = pygame.font.Font(pygame.font.match_font("Arial"), 24)
     y = 150
+    iterator = 0
     for i in data:
-        campo_texto = []
+        iterator+=1
+        if iterator == 5:
+            break
+        campo_texto = [str(iterator)+'.']
         y += 25
         for j in globals.convert_char(i.get('nome')):
             campo_texto.append(j)
