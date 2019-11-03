@@ -7,13 +7,14 @@ pygame.init()
 SCREEN_SIZE = (1000, 500)
 screen = pygame.display.set_mode(SCREEN_SIZE, 0, 16)
 clock = pygame.time.Clock()
-display = pygame.Surface((400, 200))
+display = pygame.Surface((600, 300))
 
 mapa = mapa('Data\mapa')
 
 moving_right = False
 moving_left = False
 frame_user = 1
+frame_vil = 1
 x_user = 104
 y_user = 142
 true_scroll = [0, 0]
@@ -48,7 +49,9 @@ def desenhar_mapa(mapa):
 
 
 while True:
+
     display.fill((146, 244, 255))
+
     clock.tick(12)
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -57,18 +60,50 @@ while True:
 
     display.fill((146, 244, 255))
     img = pygame.image.load(globals.get_path() + "\\View\\user_" + str(frame_user) + ".png").convert_alpha()
+    img_vil = pygame.image.load(globals.get_path() + "\\View\\vil_" + str(frame_vil) + ".png").convert_alpha()
+    display.blit(img_vil, (300,162))
     globals.speed = 4
     x_user += globals.speed
     display.blit(img, (x_user, y_user))
     if frame_user == 4:
         frame_user = 2
     else:
-        frame_user -= -1
+        frame_user += 1
+    if frame_vil == 6:
+        frame_vil = 1
+    else:
+        frame_vil += 1
     if x_user >= 400:
         x_user = 0
-        display.unlock()
-        display.scroll(3 - 00, 300)
+
     desenhar_mapa(mapa)
     display.blit(mapa.img_sol, (300, 10))
     screen.blit(pygame.transform.scale(display, SCREEN_SIZE), (0, 0))
+
     pygame.display.update()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
