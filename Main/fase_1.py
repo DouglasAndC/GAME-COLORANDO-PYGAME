@@ -51,18 +51,6 @@ def botoesMenu(color,x,y,width,height):
         return pygame.draw.rect(screen, color, [x, y, width, height])        
 
 def menu():
-        #Criando Retangulos
-        #Reta caindo 1
-        #pygame.draw.rect(screen, CorSelecionada, [188, 313, 60, 365])
-        #Retangulo Balde Preenchido
-        #pygame.draw.rect(screen, CorSelecionada, [19, 373, 468, 305])
-        #Retangulo até metade
-        #pygame.draw.rect(screen, CorSelecionada, [19, 508, 468, 170])
-        #Retangulo acima metade
-        #pygame.draw.rect(screen, CorSelecionada, [19, 373, 468, 170])
-        #Retangulo Caindo ate metade
-        #pygame.draw.rect(screen, BLUE, [188, 313, 60, 195])
-        #screen.blit(dimensao_botao('btnVerde'),(550,-100))      
         btn1 = botoesMenu(BLACK,630,240,40,70)#azul
         btn2 = botoesMenu(BLACK,630,340,40,70)#laranja
         btn3 = botoesMenu(BLACK,630,440,40,70)#vermelho
@@ -75,16 +63,15 @@ def menu():
         titulo()
         torneira()
         balde()
-        screen.blit(dimensao_botao('btnAmarelo'),(550,0))
-        screen.blit(dimensao_botao('btnVerde'),(550,0))
-        screen.blit(dimensao_botao('btnLaranja'),(450,0))
-        screen.blit(dimensao_botao('btnRoxo'),(550,100))     
-        screen.blit(dimensao_botao('btnVermelho'),(450,100))
-        screen.blit(dimensao_botao('btnMistura'),(450,250))
-               
-        screen.blit(dimensao_botao('btnExclui'),(550,250))
-        
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
+        screen.blit(dimensao_botao('btnLaranja'),(450,0))
+        screen.blit(dimensao_botao('btnVermelho'),(450,100))
+        screen.blit(dimensao_botao('btnVerde'),(550,-100))
+        screen.blit(dimensao_botao('btnAmarelo'),(550,0))
+        screen.blit(dimensao_botao('btnRoxo'),(550,100))      
+        screen.blit(dimensao_botao('btnMistura'),(450,250))           
+        screen.blit(dimensao_botao('btnExclui'),(550,250))  
+        
         return btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8
 
 def primeiro():
