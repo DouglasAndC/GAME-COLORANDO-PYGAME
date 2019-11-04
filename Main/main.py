@@ -1,25 +1,47 @@
 import pygame
+import pygame as pygame
 from pygame.locals import *
 from sys import exit
 from mapa import *
 
 pygame.init()
-SCREEN_SIZE = (1000, 500)
+SCREEN_SIZE = (1000, 600)
 screen = pygame.display.set_mode(SCREEN_SIZE, 0, 16)
 clock = pygame.time.Clock()
-display = pygame.Surface((600, 300))
+display = pygame.Surface((400, 300))
 
 mapa = mapa('Data\mapa')
 
 moving_right = False
 moving_left = False
-frame_user = 1
-frame_vil = 1
-x_user = 104
+frame_user = 0
+frame_vil = 0
+frame_exp = 0
+x_user = 20
 y_user = 142
 true_scroll = [0, 0]
-
+fase_run = False
 player_rect = pygame.Rect(75, 75, 5, 13)
+globals.speed = 4
+time = 100
+sprites_user = [pygame.image.load(globals.get_path() + "\\View\\user_1.png").convert_alpha(),
+                pygame.image.load(globals.get_path() + "\\View\\user_2.png").convert_alpha(),
+                pygame.image.load(globals.get_path() + "\\View\\user_3.png").convert_alpha(),
+                pygame.image.load(globals.get_path() + "\\View\\user_4.png").convert_alpha()]
+
+sprites_vil = [pygame.image.load(globals.get_path() + "\\View\\vil_1.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\vil_2.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\vil_3.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\vil_4.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\vil_5.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\vil_6.png").convert_alpha()]
+
+sprites_exp = [pygame.image.load(globals.get_path() + "\\View\\exp_1.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\exp_2.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\exp_3.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\exp_4.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\exp_5.png").convert_alpha(),
+               pygame.image.load(globals.get_path() + "\\View\\exp_6.png").convert_alpha()]
 
 
 def desenhar_mapa(mapa):
@@ -48,62 +70,42 @@ def desenhar_mapa(mapa):
         y += 1
 
 
-while True:
+def explodir():
+    return sprites_exp[frame_exp]
 
+
+while True:
+    display.blit(mapa.img_sol, (300, 10))
+    screen.blit(pygame.transform.scale(display, SCREEN_SIZE), (0, 0))
+    clock.tick(12)
     display.fill((146, 244, 255))
 
-    clock.tick(12)
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             exit()
 
-    display.fill((146, 244, 255))
-    img = pygame.image.load(globals.get_path() + "\\View\\user_" + str(frame_user) + ".png").convert_alpha()
-    img_vil = pygame.image.load(globals.get_path() + "\\View\\vil_" + str(frame_vil) + ".png").convert_alpha()
-    display.blit(img_vil, (300,162))
-    globals.speed = 4
-    x_user += globals.speed
-    display.blit(img, (x_user, y_user))
-    if frame_user == 4:
-        frame_user = 2
-    else:
-        frame_user += 1
-    if frame_vil == 6:
-        frame_vil = 1
-    else:
-        frame_vil += 1
-    if x_user >= 400:
-        x_user = 0
-
+    pygame.time.wait(time)
     desenhar_mapa(mapa)
-    display.blit(mapa.img_sol, (300, 10))
-    screen.blit(pygame.transform.scale(display, SCREEN_SIZE), (0, 0))
+    if frame_vil != 5:
+        frame_vil += 1
+    if frame_vil == 5:
+        if frame_exp < 5:
+            frame_exp += 1
+        display.blit(explodir(), (200, 180))
+        fase_run = True
+        time = 0
+        x_user += globals.speed
+        if frame_user == 3:
+            frame_user = 2
+        else:
+            frame_user += 1
+        if x_user >= 400:
+            x_user = 0
 
+    img = sprites_user[frame_user]
+    img_vil = sprites_vil[frame_vil]
+    display.blit(img, (x_user, y_user))
+    display.blit(img_vil, (360, 162))
+    pygame.display.flip()
     pygame.display.update()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -41,7 +41,7 @@ def printar_placar():
         iterator += 1
         if iterator == 11:
             break
-        campo_texto = [str(iterator)+'.']
+        campo_texto = [str(iterator)+'. ']
         y += 25
         for j in globals.convert_char(i.get('nome')):
             campo_texto.append(j)
