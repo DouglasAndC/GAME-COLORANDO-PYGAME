@@ -57,4 +57,9 @@ def salvar_usuario(user_name):
 
 
 def misturar_cores(color1, color2):
-    return int((color1[0] + color2[0]) / 2), int((color1[1] + color2[1]) / 2), int((color1[2] + color2[2]) / 2)
+    cor = int((color1[0] + color2[0]) / 2), int((color1[1] + color2[1]) / 2), int((color1[2] + color2[2]) / 2)
+    if(cor == (127, 127, 127)):
+        cor = (0,255,0)
+        return cor;
+    else:
+        return cor
