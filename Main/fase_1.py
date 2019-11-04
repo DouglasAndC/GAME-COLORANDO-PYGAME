@@ -13,13 +13,17 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 ROXO = (127,0,127)
-LARANJA = (255,165,0)
+LARANJA = (255, 127, 0)
 AMARELO = (255,255,0)
 COR1 = (153, 0, 153)
 PELE = (251, 230, 226)
 CorSelecionada = (0, 255, 0)
 global cor1
 cor1 = (0, 0, 0)
+
+cont = 1
+
+fase = 0
 
 pygame.init()
 
@@ -31,6 +35,35 @@ pygame.display.set_caption('COLORANDO')
 
 # preenchendo o fundo com preto
 screen.fill(PELE)
+
+def regras():
+      flag = True
+      while True:
+         if(flag== False):
+            break
+         else:
+            for event in pygame.event.get():
+                pos = pygame.mouse.get_pos()
+                pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
+                btn0 = botoesMenu(BLACK,300,500,372/2,149/2)
+                txtFase3 = pygame.image.load(globals.get_path()+'\\View\\fase1\\txtFase1.png').convert_alpha()
+                screen.fill(PELE)
+                novo_txtFase3 = pygame.transform.scale(txtFase3,(int(1363/2),int(541/2)))
+                screen.blit(novo_txtFase3,(60,150))      
+                screen.blit(botao_continuar('btnContinuar'),(300,500))
+                pygame.display.update()
+                if event.type == QUIT:
+                  pygame.quit()
+                  exit()
+                elif btn0.collidepoint(pos) and pressed1:
+                    flag = False
+                    break
+                  
+def botao_continuar(botao):
+       btn = pygame.image.load(globals.get_path()+'\\View\\corrida\\'+botao+'.png').convert_alpha()  
+       novo_botao = pygame.transform.scale(btn,(int(372/2),int(149/2)))
+       return novo_botao
+      
 def dimensao_botao(botao):
         btn = pygame.image.load(globals.get_path()+'\\View\\fase1\\'+botao+'.png').convert_alpha()  
         novo_botao = pygame.transform.scale(btn,(int(400),int(1500/2)))
@@ -56,10 +89,10 @@ def botoesMenu(color,x,y,width,height):
 
 def menu():
         btn1 = botoesMenu(BLACK,630,240,40,70)#azul
-        btn2 = botoesMenu(BLACK,630,340,40,70)#laranja
+        btn2 = botoesMenu(BLACK,630,340,40,70)#amarelo
         btn3 = botoesMenu(BLACK,630,440,40,70)#vermelho
         btn4 = botoesMenu(BLACK,730,240,40,70)#verde
-        btn5 = botoesMenu(BLACK,730,340,40,70)#amarelo
+        btn5 = botoesMenu(BLACK,730,340,40,70)#laranja
         btn6 = botoesMenu(BLACK,730,440,40,70)#roxo
         btn7 = botoesMenu(BLACK,620,580,60,100)#juntar
         btn8 = botoesMenu(BLACK,720,560,60,130)#lixo
@@ -68,11 +101,14 @@ def menu():
         torneira()
         balde()
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
-        screen.blit(dimensao_botao('btnLaranja'),(450,0))
+        screen.blit(dimensao_botao('btnAmarelo'),(450,0))        
         screen.blit(dimensao_botao('btnVermelho'),(450,100))
-        screen.blit(dimensao_botao('btnVerde'),(550,-100))
-        screen.blit(dimensao_botao('btnAmarelo'),(550,0))
-        screen.blit(dimensao_botao('btnRoxo'),(550,100))       
+        if(fase >=1):
+            screen.blit(dimensao_botao('btnVerde'),(550,-100))            
+        if(fase >= 2):
+            screen.blit(dimensao_botao('btnLaranja'),(550,0))
+        if(fase >= 3): 
+           screen.blit(dimensao_botao('btnRoxo'),(550,100))       
         screen.blit(dimensao_botao('btnExclui'),(550,250))  
         
         return btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8
@@ -105,30 +141,33 @@ def primeiro():
                         pygame.display.flip()
                         return  BLUE
                     elif menu_botoes[1].collidepoint(pos) and pressed1:
-                        derramando1(LARANJA,19, 508, 468, 170)
+                        derramando1(AMARELO,19, 508, 468, 170)
                         botoesMenu(PELE,188,313,60,195)
                         pygame.display.flip()
-                        return LARANJA
+                        return AMARELO                       
                     elif menu_botoes[2].collidepoint(pos) and pressed1:
                         derramando1(RED,19, 508, 468, 170)
                         botoesMenu(PELE,188,313,60,195)
                         pygame.display.flip()
                         return RED
                     elif menu_botoes[3].collidepoint(pos) and pressed1:
-                        derramando1(GREEN,19, 508, 468, 170)
-                        botoesMenu(PELE,188,313,60,195)
-                        pygame.display.flip()
-                        return GREEN
+                       if(fase>= 1):
+                           derramando1(GREEN,19, 508, 468, 170)
+                           botoesMenu(PELE,188,313,60,195)
+                           pygame.display.flip()
+                           return GREEN
                     elif menu_botoes[4].collidepoint(pos) and pressed1:
-                        derramando1(AMARELO,19, 508, 468, 170)
-                        botoesMenu(PELE,188,313,60,195)
-                        pygame.display.flip()
-                        return AMARELO
+                        if(fase>= 2):
+                           derramando1(LARANJA,19, 508, 468, 170)
+                           botoesMenu(PELE,188,313,60,195)
+                           pygame.display.flip()
+                           return LARANJA
                     elif menu_botoes[5].collidepoint(pos) and pressed1:
-                        derramando1(ROXO,19, 508, 468, 170)
-                        botoesMenu(PELE,188,313,60,195)
-                        pygame.display.flip()
-                        return ROXO
+                         if(fase>= 3):
+                           derramando1(ROXO,19, 508, 468, 170)
+                           botoesMenu(PELE,188,313,60,195)
+                           pygame.display.flip()
+                           return ROXO
                     if event.type == QUIT:
                         pygame.quit()
                         exit()
@@ -145,35 +184,34 @@ def segundo():
                         pygame.display.flip()
                         return  BLUE
                     elif menu_botoes[1].collidepoint(pos) and pressed1:
-                        derramando2(LARANJA,19, 373, 468, 170)
+                        derramando2(AMARELO,19, 373, 468, 170)
                         botoesMenu(PELE,188,313,60,60)
                         pygame.display.flip()
-                        return LARANJA
+                        return AMARELO
+                        
                     elif menu_botoes[2].collidepoint(pos) and pressed1:
                         derramando2(RED,19, 373, 468, 170)
                         botoesMenu(PELE,188,313,60,60)
                         pygame.display.flip()
                         return RED
                     elif menu_botoes[3].collidepoint(pos) and pressed1:
-                        derramando2(GREEN,19, 373, 468, 170)
-                        botoesMenu(PELE,188,313,60,60)
-                        pygame.display.flip()
-                        return GREEN
+                       if(fase>= 1):
+                           derramando2(GREEN,19, 373, 468, 170)
+                           botoesMenu(PELE,188,313,60,60)
+                           pygame.display.flip()
+                           return GREEN
                     elif menu_botoes[4].collidepoint(pos) and pressed1:
-                        derramando2(AMARELO,19, 373, 468, 170)
-                        botoesMenu(PELE,188,313,60,60)
-                        pygame.display.flip()
-                        return AMARELO
+                        if(fase>= 2):
+                           derramando2(LARANJA,19, 373, 468, 170)
+                           botoesMenu(PELE,188,313,60,60)
+                           pygame.display.flip()
+                           return LARANJA
                     elif menu_botoes[5].collidepoint(pos) and pressed1:
-                        derramando2(ROXO,19, 373, 468, 170)
-                        botoesMenu(PELE,188,313,60,60)
-                        pygame.display.flip()
-                        return ROXO
-                    elif menu_botoes[6].collidepoint(pos) and pressed1:
-                        screen.fill(BLACK)
-                        #Faz algo quando aperta o btn7
-                    elif menu_botoes[7].collidepoint(pos) and pressed1:
-                        screen.fill(BLACK)
+                        if(fase>= 3):
+                           derramando2(ROXO,19, 373, 468, 170)
+                           botoesMenu(PELE,188,313,60,60)
+                           pygame.display.flip()
+                           return ROXO
                     if event.type == QUIT:
                         pygame.quit()
                         exit()
@@ -186,8 +224,8 @@ def misturar(cor1,cor2):
                     pressed1, pressed2, pressed3 = pygame.mouse.get_pressed()
                     if menu_botoes[6].collidepoint(pos) and pressed1:
                         resultado = globals.misturar_cores(cor1,cor2)
-                        print(resultado)
                         botoesMenu(resultado,19, 373, 468, 305)
+                        botoesMenu(PELE,620,560,70,120)
                         pygame.display.update()
                         return resultado
                     elif menu_botoes[7].collidepoint(pos) and pressed1:
@@ -211,9 +249,12 @@ def clicarExcluir():
                     if event.type == QUIT:
                         pygame.quit()
                         exit()
+
+regras()
+                        
 menu()
 menu_botoes = menu()
-cont = 1
+
 while True:
         if(cont == 1):
                 cor1 = primeiro()
@@ -226,15 +267,31 @@ while True:
                 pygame.display.flip()
         elif(cont == 3):
             resultado = misturar(cor1,cor2)
-            print(resultado)
-            if(resultado == ROXO):
-                pygame.quit()
-                exit()
-            elif(resultado == 0):
-                cont = 1
+            if (fase == 0):
+               if(resultado == GREEN):
+                  fase = 1
+               elif(resultado == 0):
+                  cont = 1
+            elif(fase == 1):
+               if(resultado == LARANJA):
+                  fase = 2
+               elif(resultado == 0):
+                  cont = 1
+            elif(fase == 2):
+               if(resultado == ROXO):
+                  fase = 3
+                  cont = 4
+               elif(resultado == 0):
+                  cont = 1
+               else:
+                  clicarExcluir()
+                  print(cont)
             else:
-                clicarExcluir()
-                cont = 1
+               clicarExcluir()
+               print(cont)
+        elif(cont == 4):              
+              pygame.quit()
+              exit()
         for event in pygame.event.get():
            if event.type == QUIT:
               pygame.quit()
