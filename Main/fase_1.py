@@ -87,6 +87,11 @@ def balde():
 def botoesMenu(color,x,y,width,height):
         return pygame.draw.rect(screen, color, [x, y, width, height])        
 
+def instrucao():
+        titulo = pygame.image.load(globals.get_path()+'\\View\\fase1\\txtCorFormada.png').convert_alpha()
+        screen.blit(titulo,(50,40))
+
+
 def menu():
         btn1 = botoesMenu(BLACK,630,240,40,70)#azul
         btn2 = botoesMenu(BLACK,630,340,40,70)#amarelo
@@ -97,9 +102,16 @@ def menu():
         btn7 = botoesMenu(BLACK,620,580,60,100)#juntar
         btn8 = botoesMenu(BLACK,720,560,60,130)#lixo
         screen.fill(PELE)
-        titulo()
+        #titulo()
+        instrucao()
         torneira()
         balde()
+        if(fase ==0):
+             screen.blit(dimensao_botao('btnVerde'),(370,-255))           
+        elif(fase == 1):
+             screen.blit(dimensao_botao('btnLaranja'),(370,-255))
+        else: 
+             screen.blit(dimensao_botao('btnRoxo'),(370,-255))
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
         screen.blit(dimensao_botao('btnAmarelo'),(450,0))        
         screen.blit(dimensao_botao('btnVermelho'),(450,100))
@@ -283,9 +295,6 @@ while True:
                   cont = 4
                elif(resultado == 0):
                   cont = 1
-               else:
-                  clicarExcluir()
-                  print(cont)
             else:
                clicarExcluir()
                print(cont)
