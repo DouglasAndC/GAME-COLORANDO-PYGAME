@@ -14,6 +14,7 @@ class mapa(object):
         self.img_trapezio_p3 = self.criar_imgs('trapezio_p3')
         self.img_triangulo_p1 = self.criar_imgs('triangulo_p1')
         self.img_triangulo_p2 = self.criar_imgs('triangulo_p2')
+        self.img_triangulo_paralelo = self.criar_imgs('triangulo_paralelo')
         self.img_sol = self.criar_imgs('sol')
 
     def ler_mapa(self, caminho):
@@ -29,3 +30,6 @@ class mapa(object):
 
     def criar_imgs(self, nome):
         return pygame.image.load(globals.get_path() + '\\View\\' + nome + '.png').convert_alpha()
+
+    def att_mapa(self, caminho):
+        self.value = self.ler_mapa(caminho)

@@ -49,7 +49,7 @@ def regras():
                 txtFase3 = pygame.image.load(globals.get_path()+'\\View\\fase1\\txtFase1.png').convert_alpha()
                 screen.fill(PELE)
                 novo_txtFase3 = pygame.transform.scale(txtFase3,(int(1363/2),int(541/2)))
-                screen.blit(novo_txtFase3,(60,150))      
+                screen.blit(novo_txtFase3,(60,150))
                 screen.blit(botao_continuar('btnContinuar'),(300,500))
                 pygame.display.update()
                 if event.type == QUIT:
@@ -58,17 +58,17 @@ def regras():
                 elif btn0.collidepoint(pos) and pressed1:
                     flag = False
                     break
-                  
+
 def botao_continuar(botao):
-       btn = pygame.image.load(globals.get_path()+'\\View\\corrida\\'+botao+'.png').convert_alpha()  
+       btn = pygame.image.load(globals.get_path()+'\\View\\corrida\\'+botao+'.png').convert_alpha()
        novo_botao = pygame.transform.scale(btn,(int(372/2),int(149/2)))
        return novo_botao
-      
+
 def dimensao_botao(botao):
-        btn = pygame.image.load(globals.get_path()+'\\View\\fase1\\'+botao+'.png').convert_alpha()  
+        btn = pygame.image.load(globals.get_path()+'\\View\\fase1\\'+botao+'.png').convert_alpha()
         novo_botao = pygame.transform.scale(btn,(int(400),int(1500/2)))
         return novo_botao
-        
+
 def titulo():
         titulo = pygame.image.load(globals.get_path()+'\\View\\fase1\\titulo.png').convert_alpha()
         novo_titulo = pygame.transform.scale(titulo,(int(726/2), int(217/2)))
@@ -85,7 +85,7 @@ def balde():
         screen.blit(novo_titulo,(2,0))
 
 def botoesMenu(color,x,y,width,height):
-        return pygame.draw.rect(screen, color, [x, y, width, height])        
+        return pygame.draw.rect(screen, color, [x, y, width, height])
 
 def instrucao():
         titulo = pygame.image.load(globals.get_path()+'\\View\\fase1\\txtCorFormada.png').convert_alpha()
@@ -108,7 +108,7 @@ def menu():
         btn8 = botoesMenu(BLACK,720,560,60,130)#lixo
         btn9 = botoesMenu(BLACK,515,560,60,120)#confirma
         screen.fill(PELE)
-        
+
         #titulo()
         instrucao()
         torneira()
@@ -118,25 +118,25 @@ def menu():
         #screen.blit(dimensao_botao('quad_laranja'),(460,-300))
         #screen.blit(dimensao_botao('quad_roxo'),(460,-300))
         if(fase ==0):
-             screen.blit(dimensao_botao('quad_verde'),(460,-300))           
+             screen.blit(dimensao_botao('quad_verde'),(460,-300))
         elif(fase == 1):
              screen.blit(dimensao_botao('quad_laranja'),(460,-300))
-        else: 
+        else:
              screen.blit(dimensao_botao('quad_roxo'),(460,-300))
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
-        screen.blit(dimensao_botao('btnAmarelo'),(450,0))        
+        screen.blit(dimensao_botao('btnAmarelo'),(450,0))
         screen.blit(dimensao_botao('btnVermelho'),(450,100))
         if(fase >=1):
-            screen.blit(dimensao_botao('btnVerde'),(550,-100))            
+            screen.blit(dimensao_botao('btnVerde'),(550,-100))
         if(fase >= 2):
             screen.blit(dimensao_botao('btnLaranja'),(550,0))
-        if(fase >= 3): 
-           screen.blit(dimensao_botao('btnRoxo'),(550,100))       
-        
+        if(fase >= 3):
+           screen.blit(dimensao_botao('btnRoxo'),(550,100))
+
         pygame.display.update()
-        
+
         return btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9
-      
+
 def derramando1(cor,x, y, widht,height):
     aux = 1
     while(aux < 365):
@@ -169,7 +169,7 @@ def primeiro():
                         derramando1(AMARELO,19, 508, 468, 170)
                         botoesMenu(PELE,188,313,60,195)
                         pygame.display.flip()
-                        return AMARELO                       
+                        return AMARELO
                     elif menu_botoes[2].collidepoint(pos) and pressed1:
                         derramando1(RED,19, 508, 468, 170)
                         botoesMenu(PELE,188,313,60,195)
@@ -213,7 +213,7 @@ def segundo():
                         botoesMenu(PELE,188,313,60,60)
                         pygame.display.flip()
                         return AMARELO
-                        
+
                     elif menu_botoes[2].collidepoint(pos) and pressed1:
                         derramando2(RED,19, 373, 468, 170)
                         botoesMenu(PELE,188,313,60,60)
@@ -240,7 +240,7 @@ def segundo():
                     if event.type == QUIT:
                         pygame.quit()
                         exit()
-def misturar(cor1,cor2):    
+def misturar(cor1,cor2):
         screen.blit(dimensao_botao('btnMistura'),(450,250))
         while True:
             for event in pygame.event.get():
@@ -258,13 +258,13 @@ def misturar(cor1,cor2):
                         exit()
 def clicarConfirmarOuExcluir():
         botoesMenu(PELE,620,560,70,120)
-        pygame.display.update()        
+        pygame.display.update()
         btnConfirmar()
         screen.blit(dimensao_botao('btnExclui'),(550,250))
         while True:
             for event in pygame.event.get():
                     pygame.display.update()
-                    pos = pygame.mouse.get_pos()                   
+                    pos = pygame.mouse.get_pos()
                     pressed1, pressed2, pressed3 = pygame.mouse.get_pressed()
                     if menu_botoes[7].collidepoint(pos) and pressed1:
                         screen.fill(PELE)
@@ -273,13 +273,13 @@ def clicarConfirmarOuExcluir():
                     elif menu_botoes[8].collidepoint(pos) and pressed1:
                          screen.fill(PELE)
                          menu()
-                         return 1         
+                         return 1
                     elif event.type == QUIT:
                         pygame.quit()
                         exit()
 
 regras()
-                        
+
 menu()
 menu_botoes = menu()
 
@@ -322,7 +322,7 @@ while True:
                         cont = 1
             else:
                 cont = 1
-        elif(cont == 4):              
+        elif(cont == 4):
               pygame.quit()
               exit()
         for event in pygame.event.get():
