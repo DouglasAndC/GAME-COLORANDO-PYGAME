@@ -97,6 +97,7 @@ def btnConfirmar():
         screen.blit(novo_titulo,(500,495))
 
 def menu():
+        print(fase)
         btn1 = botoesMenu(BLACK,630,240,40,70)#azul
         btn2 = botoesMenu(BLACK,630,340,40,70)#amarelo
         btn3 = botoesMenu(BLACK,630,440,40,70)#vermelho
@@ -105,22 +106,23 @@ def menu():
         btn6 = botoesMenu(BLACK,730,440,40,70)#roxo
         btn7 = botoesMenu(BLACK,620,580,60,100)#juntar
         btn8 = botoesMenu(BLACK,720,560,60,130)#lixo
+        btn9 = botoesMenu(BLACK,515,560,60,120)#confirma
         screen.fill(PELE)
+        
         #titulo()
         instrucao()
         torneira()
         balde()
-        btnConfirmar()
         #Quadrados que indicarão a cor a ser desenhada
         #screen.blit(dimensao_botao('quad_verde'),(460,-300))
         #screen.blit(dimensao_botao('quad_laranja'),(460,-300))
         #screen.blit(dimensao_botao('quad_roxo'),(460,-300))
         if(fase ==0):
-             screen.blit(dimensao_botao('btnVerde'),(370,-255))           
+             screen.blit(dimensao_botao('quad_verde'),(460,-300))           
         elif(fase == 1):
-             screen.blit(dimensao_botao('btnLaranja'),(370,-255))
+             screen.blit(dimensao_botao('quad_laranja'),(460,-300))
         else: 
-             screen.blit(dimensao_botao('quad_roxo'),(370,-255))
+             screen.blit(dimensao_botao('quad_roxo'),(460,-300))
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
         screen.blit(dimensao_botao('btnAmarelo'),(450,0))        
         screen.blit(dimensao_botao('btnVermelho'),(450,100))
@@ -130,9 +132,11 @@ def menu():
             screen.blit(dimensao_botao('btnLaranja'),(550,0))
         if(fase >= 3): 
            screen.blit(dimensao_botao('btnRoxo'),(550,100))       
-        screen.blit(dimensao_botao('btnExclui'),(550,250))  
+        screen.blit(dimensao_botao('btnExclui'),(550,250))
+        pygame.display.update()
         
-        return btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8
+        return btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9
+      
 def derramando1(cor,x, y, widht,height):
     aux = 1
     while(aux < 365):
@@ -256,18 +260,24 @@ def misturar(cor1,cor2):
                     if event.type == QUIT:
                         pygame.quit()
                         exit()
-def clicarExcluir():
+def clicarConfirmarOuExcluir():
         botoesMenu(PELE,620,560,70,120)
+        pygame.display.update()        
+        btnConfirmar()
         while True:
             for event in pygame.event.get():
                     pygame.display.update()
-                    pos = pygame.mouse.get_pos()
+                    pos = pygame.mouse.get_pos()                   
                     pressed1, pressed2, pressed3 = pygame.mouse.get_pressed()
                     if menu_botoes[7].collidepoint(pos) and pressed1:
                         screen.fill(PELE)
                         menu()
                         return 0
-                    if event.type == QUIT:
+                    elif menu_botoes[8].collidepoint(pos) and pressed1:
+                         screen.fill(PELE)
+                         menu()
+                         return 1         
+                    elif event.type == QUIT:
                         pygame.quit()
                         exit()
 
@@ -278,6 +288,7 @@ menu_botoes = menu()
 
 while True:
         if(cont == 1):
+                menu()
                 cor1 = primeiro()
                 cont= cont + 1
                 print(cor1)
@@ -288,25 +299,32 @@ while True:
                 pygame.display.flip()
         elif(cont == 3):
             resultado = misturar(cor1,cor2)
-            if (fase == 0):
-               if(resultado == GREEN):
-                  fase = 1
-               elif(resultado == 0):
-                  cont = 1
-            elif(fase == 1):
-               if(resultado == LARANJA):
-                  fase = 2
-               elif(resultado == 0):
-                  cont = 1
-            elif(fase == 2):
-               if(resultado == ROXO):
-                  fase = 3
-                  cont = 4
-               elif(resultado == 0):
-                  cont = 1
+            decisao = clicarConfirmarOuExcluir()
+            print(decisao)
+            if(decisao==1):
+                  if (fase == 0):
+                        if(resultado == GREEN):
+                              print("aaaagsdgdgsd")
+                              print(fase)
+                              fase = fase + 1
+                              print(fase)
+                              cont = 1
+                        else:
+                              cont = 1
+                  elif(fase == 1):
+                        if(resultado == LARANJA):
+                              fase = 2
+                              cont = 1
+                        else:
+                              cont = 1
+                  elif(fase == 2):
+                        if(resultado == ROXO):
+                              fase = 3
+                              cont = 4
+                  else:
+                        cont = 1
             else:
-               clicarExcluir()
-               print(cont)
+                cont = 1
         elif(cont == 4):              
               pygame.quit()
               exit()
