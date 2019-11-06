@@ -106,12 +106,16 @@ def menu():
         instrucao()
         torneira()
         balde()
+        #Quadrados que indicarão a cor a ser desenhada
+        #screen.blit(dimensao_botao('quad_verde'),(460,-300))
+        #screen.blit(dimensao_botao('quad_laranja'),(460,-300))
+        #screen.blit(dimensao_botao('quad_roxo'),(460,-300))
         if(fase ==0):
              screen.blit(dimensao_botao('btnVerde'),(370,-255))           
         elif(fase == 1):
              screen.blit(dimensao_botao('btnLaranja'),(370,-255))
         else: 
-             screen.blit(dimensao_botao('btnRoxo'),(370,-255))
+             screen.blit(dimensao_botao('quad_roxo'),(370,-255))
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
         screen.blit(dimensao_botao('btnAmarelo'),(450,0))        
         screen.blit(dimensao_botao('btnVermelho'),(450,100))
