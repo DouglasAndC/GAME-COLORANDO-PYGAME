@@ -91,6 +91,10 @@ def instrucao():
         titulo = pygame.image.load(globals.get_path()+'\\View\\fase1\\txtCorFormada.png').convert_alpha()
         screen.blit(titulo,(50,40))
 
+def btnConfirmar():
+        titulo = pygame.image.load(globals.get_path()+'\\View\\fase1\\btnConfirmar.png').convert_alpha()
+        novo_titulo = pygame.transform.scale(titulo,(int(115), int(215)))
+        screen.blit(novo_titulo,(500,495))
 
 def menu():
         btn1 = botoesMenu(BLACK,630,240,40,70)#azul
@@ -106,6 +110,7 @@ def menu():
         instrucao()
         torneira()
         balde()
+        btnConfirmar()
         #Quadrados que indicarão a cor a ser desenhada
         #screen.blit(dimensao_botao('quad_verde'),(460,-300))
         #screen.blit(dimensao_botao('quad_laranja'),(460,-300))
