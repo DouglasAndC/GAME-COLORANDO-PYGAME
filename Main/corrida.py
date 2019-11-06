@@ -5,9 +5,9 @@ from mapa import *
 
 pygame.init()
 SCREEN_SIZE = (1000,500)
-screen = pygame.display.set_mode(SCREEN_SIZE, 0 ,16)
+screen = pygame.display.set_mode()
 clock = pygame.time.Clock()
-display=pygame.Surface((500,300))
+display = pygame.Surface((500,300))
 pulo = False
 
 global cont

@@ -132,7 +132,7 @@ def menu():
             screen.blit(dimensao_botao('btnLaranja'),(550,0))
         if(fase >= 3): 
            screen.blit(dimensao_botao('btnRoxo'),(550,100))       
-        screen.blit(dimensao_botao('btnExclui'),(550,250))
+        
         pygame.display.update()
         
         return btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9
@@ -253,10 +253,6 @@ def misturar(cor1,cor2):
                         botoesMenu(PELE,620,560,70,120)
                         pygame.display.update()
                         return resultado
-                    elif menu_botoes[7].collidepoint(pos) and pressed1:
-                        screen.fill(PELE)
-                        menu()
-                        return 0
                     if event.type == QUIT:
                         pygame.quit()
                         exit()
@@ -264,6 +260,7 @@ def clicarConfirmarOuExcluir():
         botoesMenu(PELE,620,560,70,120)
         pygame.display.update()        
         btnConfirmar()
+        screen.blit(dimensao_botao('btnExclui'),(550,250))
         while True:
             for event in pygame.event.get():
                     pygame.display.update()
