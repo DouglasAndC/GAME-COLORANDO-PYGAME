@@ -32,6 +32,11 @@ screen.blit(background, (0, 0))
 
 centralizado = screen_largura / 2
 
+pygame.mixer.init()
+
+pygame.mixer.music.load(globals.get_path() + '\\Sound\\menu.mpeg')
+
+pygame.mixer.music.play()
 
 def printar_placar():
     data = globals.ler_usuario()
