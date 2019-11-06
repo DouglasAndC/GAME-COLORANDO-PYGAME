@@ -120,7 +120,7 @@ def menu():
         elif(fase == 1):
              screen.blit(dimensao_botao('btnLaranja'),(370,-255))
         else: 
-             screen.blit(dimensao_botao('quad_roxo'),(370,-255))
+             screen.blit(dimensao_botao('btnRoxo'),(370,-255))
         screen.blit(dimensao_botao('btnAzul'),(450,-100))
         screen.blit(dimensao_botao('btnAmarelo'),(450,0))        
         screen.blit(dimensao_botao('btnVermelho'),(450,100))
