@@ -3,7 +3,9 @@ from pygame.locals import *
 from pygame import *
 import globals
 import pygame as pg
+from pygame.mixer import Sound
 import time
+
 
 pg.init()
 # definindo cores
@@ -26,6 +28,14 @@ cont = 1
 fase = 0
 
 pygame.init()
+
+pygame.mixer.init()
+
+fundo = pygame.mixer.music.load(globals.get_path() + '\\Sound\\gameplay.mpeg')
+
+click = pygame.mixer.Sound(globals.get_path() + '\\Sound\\click.wav')
+
+pygame.mixer.music.play()
 
 screen = pygame.display.set_mode((800, 700))
 # carregando fonte
@@ -56,6 +66,7 @@ def regras():
                   pygame.quit()
                   exit()
                 elif btn0.collidepoint(pos) and pressed1:
+                    click.play()
                     flag = False
                     break
 
@@ -97,7 +108,6 @@ def btnConfirmar():
         screen.blit(novo_titulo,(500,495))
 
 def menu():
-        print(fase)
         btn1 = botoesMenu(BLACK,630,240,40,70)#azul
         btn2 = botoesMenu(BLACK,630,340,40,70)#amarelo
         btn3 = botoesMenu(BLACK,630,440,40,70)#vermelho
@@ -288,23 +298,18 @@ while True:
                 menu()
                 cor1 = primeiro()
                 cont= cont + 1
-                print(cor1)
         elif(cont == 2):
                 cor2 = segundo()
                 cont= cont + 1
-                print(cor2)
                 pygame.display.flip()
         elif(cont == 3):
             resultado = misturar(cor1,cor2)
             decisao = clicarConfirmarOuExcluir()
-            print(decisao)
             if(decisao==1):
                   if (fase == 0):
                         if(resultado == GREEN):
-                              print("aaaagsdgdgsd")
-                              print(fase)
+                              
                               fase = fase + 1
-                              print(fase)
                               cont = 1
                         else:
                               cont = 1
