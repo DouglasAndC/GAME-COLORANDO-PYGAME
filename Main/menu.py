@@ -258,6 +258,7 @@ while True:
             cont = cont - 4
         else:
             import fase_1
+            dislpay = pygame.display.set_mode((screen_largura, screen_altura))
             menu()
             cont = 1
     pygame.display.flip()

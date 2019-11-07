@@ -11,9 +11,11 @@ screen = pygame.display.set_mode(SCREEN_SIZE, 0, 16)
 clock = pygame.time.Clock()
 display = pygame.Surface((400, 300))
 
+BLACK = (0, 0, 0)
+
 mapa = mapa('Data\\mapa')
-pygame.mixer.music.load(globals.get_path() + "\\Sound\\gameplay.mpeg")
-pygame.mixer.music.play()
+#pygame.mixer.music.load(globals.get_path() + "\\Sound\\gameplay.mpeg")
+#pygame.mixer.music.play()
 moving_right = False
 moving_left = False
 frame_user = 0
@@ -37,6 +39,44 @@ desafio1 = False
 desafio2 = False
 desafio3 = False
 continuar = True
+
+click = pygame.mixer.Sound(globals.get_path() + '\\Sound\\click.wav')
+
+def regras():
+      flag = True
+      while True:
+         if(flag== False):
+            break
+         else:
+            for event in pygame.event.get():
+                pos = pygame.mouse.get_pos()
+                pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
+                btn0 = botoesMenu(BLACK,400,430,372/2,149/2)
+                txtFase3 = pygame.image.load(globals.get_path()+'\\View\\txtFaseFormas.png').convert_alpha()
+                screen.fill(BLACK)
+                novo_txtFase3 = pygame.transform.scale(txtFase3,(int(1363/2),int(541/2)))
+                screen.blit(novo_txtFase3,(150,100))
+                screen.blit(botao_continuar('btnContinuar'),(400,430))
+                pygame.display.update()
+                if event.type == QUIT:
+                  pygame.quit()
+                  exit()
+                elif btn0.collidepoint(pos) and pressed1:
+                    click.play()
+                    flag = False
+                    break
+
+def botao_continuar(botao):
+       btn = pygame.image.load(globals.get_path()+'\\View\\corrida\\'+botao+'.png').convert_alpha()
+       novo_botao = pygame.transform.scale(btn,(int(372/2),int(149/2)))
+       return novo_botao
+
+def botoesMenu(color,x,y,width,height):
+        return pygame.draw.rect(screen, color, [x, y, width, height])
+
+    
+regras()
+
 sprites_user = [pygame.image.load(globals.get_path() + "\\View\\user_1.png").convert_alpha(),
                 pygame.image.load(globals.get_path() + "\\View\\user_2.png").convert_alpha(),
                 pygame.image.load(globals.get_path() + "\\View\\user_3.png").convert_alpha(),
@@ -59,9 +99,11 @@ sprites_exp = [pygame.image.load(globals.get_path() + "\\View\\exp_1.png").conve
                pygame.image.load(globals.get_path() + "\\View\\exp_5.png").convert_alpha(),
                pygame.image.load(globals.get_path() + "\\View\\exp_6.png").convert_alpha()]
 
-btn1 = pygame.draw.rect(screen, (255, 255, 255), [50, 60, 60, 20])
-btn2 = pygame.draw.rect(screen, (255, 255, 255), [150, 60, 60, 20])
-btn3 = pygame.draw.rect(screen, (255, 255, 255), [250, 60, 60, 20])
+btn1 = pygame.draw.rect(screen, (255, 255, 255), [120, 110, 200, 40])
+btn2 = pygame.draw.rect(screen, (255, 255, 255), [420, 110, 200, 40])
+btn3 = pygame.draw.rect(screen, (255, 255, 255), [650, 110, 200, 40])
+
+
 
 
 def desenhar_mapa(mapa):
@@ -100,7 +142,7 @@ def explodir():
     pygame.time.wait(300)
     display.blit(i, (140, 100))
     pygame.mixer.music.load(globals.get_path() + "\\Sound\\gameplay.mpeg")
-    pygame.mixer.music.play(5, 10)
+    #pygame.mixer.music.play(5, 10)
     return True
 
 
@@ -108,7 +150,6 @@ def gerar_desafio(correto):
     formas = ["Quadrado", "Círculo", "Triângulo",
               "Hexágono", "Pentágono", "Retângulo",
               "Trapézio", "Paralelograma", "Losango", "Heptágono"]
-
     font = pygame.font.Font(pygame.font.match_font("Arial"), 20)
     x = 50
     if len(surfaces) != 3:
@@ -124,13 +165,19 @@ def gerar_desafio(correto):
         globals.index = random.randint(0, 2)
         texts[globals.index] = correto
         surfaces[globals.index] = font.render(correto, True, (0, 0, 0))
-
-    display.blit(surfaces[0], (x, 50))
-    display.blit(surfaces[1], (x + 100, 50))
-    display.blit(surfaces[2], (x + 200, 50))
+    if (cont == 1 or cont == 3):
+        display.blit(surfaces[0], (x, 50))
+        display.blit(surfaces[2], (x + 100, 50))
+        display.blit(surfaces[globals.index], (x + 200, 50))
+    elif (cont == 2):
+        display.blit(surfaces[globals.index], (x, 50))
+        display.blit(surfaces[1], (x + 100, 50))
+        display.blit(surfaces[0], (x + 200, 50))
 
     return True
 
+
+cont = 1
 
 while True:
     clock.tick(12)
@@ -146,15 +193,27 @@ while True:
             pressed1, pressed2, pressed3 = pygame.mouse.get_pressed()
             if len(rects) > 0:
                 if rects[0].collidepoint(pos) and pressed1:
-                        print("testando")
-                        desafio1 = True
-                        aux = False
+                        if (cont== 1):
+                            desafio1 = False
+                        elif (cont==2):
+                            desafio2 = True
+                        elif(cont==3):
+                            desafio3 = False
                 elif rects[1].collidepoint(pos) and pressed1:
-                        print("testando")
-                        desafio1 = True
+                        if (cont== 1):
+                            desafio1 = False
+                        elif (cont==2):
+                            desafio2 = False
+                        elif(cont==3):
+                            desafio3 = False
                 elif rects[2].collidepoint(pos) and pressed1:
-                        print("testando")
-                        desafio1 = True
+                        if (cont == 1):
+                            desafio1 = True
+                        elif (cont==2):
+                            desafio2 = False
+                        elif(cont==3):
+                            desafio3 = True
+                        
                 elif event.type == QUIT:
                         pygame.quit()
                         exit()
@@ -175,10 +234,19 @@ while True:
     if x_vil == 400:
         fase_run = True
     if fase_run:
-        respostas = gerar_desafio("Paralelograma")
-        rects = [pygame.draw.rect(screen, (255, 255, 255), [150, 110, 80, 40]),
-                 pygame.draw.rect(screen, (255, 255, 255), [450, 110, 80, 40]),
-                 pygame.draw.rect(screen, (255, 255, 255), [650, 110, 200, 40])]
+        if (cont == 1):
+            respostas = gerar_desafio("Paralelograma")
+        elif (cont == 2):
+            respostas2 = gerar_desafio("Triângulo")
+            mapa.att_mapa('Data\mapa_3')
+            pygame.display.update()
+        elif(cont == 3):
+            respostas2 = gerar_desafio("Trapézio")
+            mapa.att_mapa('Data\mapa_4')
+            pygame.display.update()
+        rects = [btn1,
+                 btn2,
+                 btn3]
         if desafio1:
             mapa.att_mapa('Data\mapa')
             x_user += globals.speed
@@ -188,6 +256,33 @@ while True:
                 frame_user += 1
             if x_user >= 400:
                 x_user = 0
+                frame_user = 0
+                desafio1 = False
+                cont = 2
+        elif desafio2:
+            mapa.att_mapa('Data\mapa')
+            x_user += globals.speed
+            if frame_user == 3:
+                frame_user = 2
+            else:
+                frame_user += 1
+            if x_user >= 400:
+                x_user = 0
+                frame_user = 0
+                desafio2 = False
+                cont = 3
+        elif desafio3:
+            mapa.att_mapa('Data\mapa')
+            x_user += globals.speed
+            if frame_user == 3:
+                frame_user = 2
+            else:
+                frame_user += 1
+            if x_user >= 400:
+                x_user = 0
+                frame_user = 0
+                desafio3 = False
+                
         else:
             display.blit(pygame.image.load(globals.get_path() + "\\View\\fase1\\btnError.png").convert_alpha(),(300, 300))
     img = sprites_user[frame_user]
