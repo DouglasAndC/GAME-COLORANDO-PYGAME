@@ -12,7 +12,7 @@ def get_path():
 
 
 speed = 1.1
-
+index = 0
 
 def convert(s):
     new = ""

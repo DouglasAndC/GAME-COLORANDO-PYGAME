@@ -2,7 +2,6 @@ import pygame
 from pygame.locals import *
 from pygame import *
 import globals
-import fase_1
 
 pygame.init()
 
@@ -185,7 +184,6 @@ def jogar():
                     exit()
                 elif len(texto) != 0:
                     if btn1.collidepoint(pos) and pressed1:
-                        fase_1
                         return globals.salvar_usuario(globals.convert(texto))
                 elif btn6.collidepoint(pos) and pressed1:
                     screen.fill((0, 0, 0))
@@ -196,7 +194,6 @@ def jogar():
             font = pygame.font.Font(pygame.font.match_font("Arial"), 24)
             pygame.draw.rect(screen, (255, 255, 255), (250, 200, 300, 30))
             text = globals.convert(texto)
-            print(text+"\n")
             newSurface = font.render(text, True, (0, 0, 0))
             screen.blit(newSurface, (250, 200))
             pygame.display.update()

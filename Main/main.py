@@ -2,6 +2,7 @@ import pygame
 import pygame as pygame
 from pygame.locals import *
 from sys import exit
+import random
 from mapa import *
 
 pygame.init()
@@ -10,8 +11,9 @@ screen = pygame.display.set_mode(SCREEN_SIZE, 0, 16)
 clock = pygame.time.Clock()
 display = pygame.Surface((400, 300))
 
-mapa = mapa('Data\mapa')
-
+mapa = mapa('Data\\mapa')
+pygame.mixer.music.load(globals.get_path() + "\\Sound\\gameplay.mpeg")
+pygame.mixer.music.play()
 moving_right = False
 moving_left = False
 frame_user = 0
@@ -19,11 +21,22 @@ frame_vil = 0
 frame_exp = 0
 x_user = 20
 y_user = 142
+x_vil = 360
+y_vil = 160
 true_scroll = [0, 0]
 fase_run = False
 player_rect = pygame.Rect(75, 75, 5, 13)
-globals.speed = 4
-time = 500
+globals.speed = 5
+tempo = 800
+rects = []
+surfaces = []
+texts = []
+i_correto = 5
+explodiu = False
+desafio1 = False
+desafio2 = False
+desafio3 = False
+continuar = True
 sprites_user = [pygame.image.load(globals.get_path() + "\\View\\user_1.png").convert_alpha(),
                 pygame.image.load(globals.get_path() + "\\View\\user_2.png").convert_alpha(),
                 pygame.image.load(globals.get_path() + "\\View\\user_3.png").convert_alpha(),
@@ -76,12 +89,59 @@ def desenhar_mapa(mapa):
 
 
 def explodir():
-    pygame.time.wait(1000)
-    return pygame.transform.scale(sprites_exp[frame_exp], (200, 200))
+    pygame.mixer.music.set_volume(25)
+    pygame.mixer.music.load(globals.get_path() + "\\Sound\\explosion.mp3")
+    pygame.mixer.music.play(1, 0.15)
+    i = pygame.transform.scale(sprites_exp[frame_exp], (225, 225))
+    pygame.time.wait(300)
+    display.blit(i, (140, 100))
+    pygame.mixer.music.load(globals.get_path() + "\\Sound\\gameplay.mpeg")
+    pygame.mixer.music.play(5, 10)
+    return True
 
 
-def gerar_desafio():
-    formas = []
+def gerar_desafio(correto):
+    formas = ["Quadrado", "Círculo", "Triângulo",
+              "Hexágono", "Pentágono", "Retângulo",
+              "Trapézio", "Paralelograma", "Losango", "Heptágono"]
+
+    font = pygame.font.Font(pygame.font.match_font("Arial"), 20)
+    x = 50
+    while True:
+        if len(surfaces) != 3:
+            for i in range(0, 3):
+                text = formas[random.randint(0, len(formas) - 1)]
+                while texts.__contains__(text) and text == correto:
+                    text = formas[random.randint(0, len(formas) - 1)]
+                    # print(text)
+                texts.append(text)
+                if text != correto:
+                    newSurface = font.render(text, True, (0, 0, 0))
+                    surfaces.append(newSurface)
+            # print(texts)
+        if not texts.__contains__(correto):
+            globals.index = random.randint(0, 2)
+            texts[globals.index] = correto
+            surfaces[globals.index] = font.render(correto, True, (0, 0, 0))
+
+        display.blit(surfaces[0], (x, 50))
+        display.blit(surfaces[1], (x + 100, 50))
+        # print(surfaces)
+        display.blit(surfaces[2], (x + 200, 50))
+        # rects = [pygame.draw.rect(surfaces[0], (255, 255, 255), [x, 60, 60, 20]),
+        #          pygame.draw.rect(surfaces[1], (255, 255, 255), [x + 100, 60, 60, 20]),
+        #          pygame.draw.rect(surfaces[2], (255, 255, 255), [x + 200, 60, 60, 20])]
+
+        for evento in pygame.event.get():
+            print(evento)
+            if evento.type == pygame.MOUSEBUTTONDOWN:
+                x, y = evento.pos
+                print(evento)
+                if surfaces[globals.index].get_rect().collidepoint(x, y):
+                    print("teste")
+                    break
+
+    # return False
 
 
 while True:
@@ -95,30 +155,37 @@ while True:
             exit()
     desenhar_mapa(mapa)
     if frame_vil != 9:
-        pygame.time.wait(time)
+        pygame.time.wait(tempo)
         frame_vil += 1
     if frame_vil == 9:
         frame_vil = 6
-    if frame_vil == 5:
-        pygame.time.wait(time)
-        if frame_exp != 5:
-            frame_exp += 1
-        pygame.time.wait(time)
-        display.blit(explodir(), (160, 100))
+        x_vil += globals.speed
+    if frame_vil == 6 and not explodiu:
         mapa.att_mapa('Data\mapa_2')
+        tempo = 0
+        for i in sprites_exp:
+            explodir()
+        explodiu = True
         fase_run = False
+    if x_vil == 400:
+        fase_run = True
     if fase_run:
-        x_user += globals.speed
-        if frame_user == 3:
-            frame_user = 2
-        else:
-            frame_user += 1
-        if x_user >= 400:
-            x_user = 0
+        desafio1 = gerar_desafio("Paralelograma")
+        # print(desafio1)
+        if desafio1:
+            x_user += globals.speed
+            if frame_user == 3:
+                frame_user = 2
+            else:
+                frame_user += 1
+            if x_user >= 400:
+                x_user = 0
 
+        else:
+            display.blit(pygame.image.load(globals.get_path() + "\\View\\fase1\\btnError.png").convert_alpha(),
+                         (300, 300))
     img = sprites_user[frame_user]
-    img_vil = sprites_vil[frame_vil]
     display.blit(img, (x_user, y_user))
-    display.blit(img_vil, (360, 160))
-    pygame.display.flip()
+    img_vil = sprites_vil[frame_vil]
+    display.blit(img_vil, (x_vil, y_vil))
     pygame.display.update()
