@@ -180,6 +180,7 @@ while True:
                  pygame.draw.rect(screen, (255, 255, 255), [450, 110, 80, 40]),
                  pygame.draw.rect(screen, (255, 255, 255), [650, 110, 200, 40])]
         if desafio1:
+            mapa.att_mapa('Data\mapa')
             x_user += globals.speed
             if frame_user == 3:
                 frame_user = 2
