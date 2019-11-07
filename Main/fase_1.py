@@ -32,6 +32,9 @@ pygame.init()
 pygame.mixer.init()
 
 fundo = pygame.mixer.music.load(globals.get_path() + '\\Sound\\gameplay.mpeg')
+
+click = pygame.mixer.Sound(globals.get_path() + '\\Sound\\click.wav')
+
 pygame.mixer.music.play()
 
 screen = pygame.display.set_mode((800, 700))
@@ -63,6 +66,7 @@ def regras():
                   pygame.quit()
                   exit()
                 elif btn0.collidepoint(pos) and pressed1:
+                    click.play()
                     flag = False
                     break
 

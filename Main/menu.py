@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from pygame import *
 import globals
-import fase_1
+#import fase_1
 
 pygame.init()
 
@@ -37,6 +37,8 @@ pygame.mixer.init()
 pygame.mixer.music.load(globals.get_path() + '\\Sound\\menu.mpeg')
 
 pygame.mixer.music.play()
+
+click = pygame.mixer.Sound(globals.get_path() + '\\Sound\\click.wav')
 
 def printar_placar():
     data = globals.ler_usuario()
@@ -102,6 +104,7 @@ def contatos():
     novo_aut = pygame.transform.scale(aut, (int(940 / 2), int(620 / 2)))
     screen.blit(novo_aut, (150, 100))
     if btn6.collidepoint(pos) and pressed1:
+        click.play()
         screen.fill((0, 0, 0))
         pygame.display.flip()
         menu()
@@ -128,14 +131,18 @@ def botaoVoltar():
 def primeiro():
     pygame.display.update()
     if menu_botoes[0].collidepoint(pos) and pressed1:
+        click.play()
         return 4
     elif menu_botoes[1].collidepoint(pos) and pressed1:
+        click.play()
         contatos()
         return 1
     elif menu_botoes[2].collidepoint(pos) and pressed1:
+        click.play()
         placar()
         return 3
     elif menu_botoes[3].collidepoint(pos) and pressed1:
+        click.play()
         pygame.quit()
         exit()
     else:
@@ -193,6 +200,7 @@ def jogar():
                         fase_1
                         return globals.salvar_usuario(globals.convert(texto))
                 elif btn6.collidepoint(pos) and pressed1:
+                    click.play()
                     screen.fill((0, 0, 0))
                     pygame.display.flip()
                     flag = False
@@ -201,7 +209,6 @@ def jogar():
             font = pygame.font.Font(pygame.font.match_font("Arial"), 24)
             pygame.draw.rect(screen, (255, 255, 255), (250, 200, 300, 30))
             text = globals.convert(texto)
-            print(text+"\n")
             newSurface = font.render(text, True, (0, 0, 0))
             screen.blit(newSurface, (250, 200))
             pygame.display.update()
@@ -218,6 +225,7 @@ def placar():
     pygame.draw.rect(screen, BLACK, (100, 155, 600, 325))
     printar_placar()
     if btn6.collidepoint(pos) and pressed1:
+        click.play()
         screen.fill((0, 0, 0))
         pygame.display.flip()
         menu()
