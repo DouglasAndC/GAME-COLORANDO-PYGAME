@@ -2,6 +2,8 @@ import pygame
 from pygame.locals import *
 from pygame import *
 import globals
+from datetime import datetime
+
 
 pygame.init()
 
@@ -14,6 +16,22 @@ screenRefresh = True
 BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
+
+now = datetime.now()
+horas = now.hour
+minu = now.minute
+sec = now.second
+
+print(minu)
+print(sec)
+
+horas = horas*3600
+
+minu = minu*60
+
+time_inicio = minu+ sec + horas
+
+print(time_inicio)
 
 dislpay = pygame.display.set_mode((screen_largura, screen_altura))
 pygame.display.set_caption('COLORANDO')
@@ -258,6 +276,20 @@ while True:
             cont = cont - 4
         else:
             import fase_1
+            fim = datetime.now()
+            horas = fim.hour
+            minu = fim.minute
+            sec = fim.second
+            horas = horas*3600
+            minu = minu*60
+            time_fim = minu+ sec + horas
+
+            tempo_fase = time_fim - time_inicio
+
+            score = 100000/tempo_fase
+
+            globals.
+            
             dislpay = pygame.display.set_mode((screen_largura, screen_altura))
             menu()
             cont = 1

@@ -165,6 +165,7 @@ def gerar_desafio(correto):
         globals.index = random.randint(0, 2)
         texts[globals.index] = correto
         surfaces[globals.index] = font.render(correto, True, (0, 0, 0))
+        
     if (cont == 1 or cont == 3):
         display.blit(surfaces[0], (x, 50))
         display.blit(surfaces[2], (x + 100, 50))
