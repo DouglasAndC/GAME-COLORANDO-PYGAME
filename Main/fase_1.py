@@ -330,9 +330,9 @@ while True:
             else:
                 cont = 1
         elif(cont == 4):
-              pygame.quit()
-              exit()
+              break
         for event in pygame.event.get():
            if event.type == QUIT:
               pygame.quit()
               exit()
+import main

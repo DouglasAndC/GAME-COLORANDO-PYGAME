@@ -257,7 +257,9 @@ while True:
         if aux == 0:
             cont = cont - 4
         else:
-            break
+            import fase_1
+            menu()
+            cont = 1
     pygame.display.flip()
     pygame.display.update()
     for event in pygame.event.get():
