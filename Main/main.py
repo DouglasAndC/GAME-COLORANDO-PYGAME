@@ -107,41 +107,25 @@ def gerar_desafio(correto):
 
     font = pygame.font.Font(pygame.font.match_font("Arial"), 20)
     x = 50
-    while True:
-        if len(surfaces) != 3:
-            for i in range(0, 3):
+    if len(surfaces) != 3:
+        for i in range(0, 3):
+            text = formas[random.randint(0, len(formas) - 1)]
+            while texts.__contains__(text) or text == correto:
                 text = formas[random.randint(0, len(formas) - 1)]
-                while texts.__contains__(text) and text == correto:
-                    text = formas[random.randint(0, len(formas) - 1)]
-                    # print(text)
-                texts.append(text)
-                if text != correto:
-                    newSurface = font.render(text, True, (0, 0, 0))
-                    surfaces.append(newSurface)
-            # print(texts)
-        if not texts.__contains__(correto):
-            globals.index = random.randint(0, 2)
-            texts[globals.index] = correto
-            surfaces[globals.index] = font.render(correto, True, (0, 0, 0))
+            texts.append(text)
+            if text != correto:
+                newSurface = font.render(text, True, (0, 0, 0))
+                surfaces.append(newSurface)
+    if not texts.__contains__(correto):
+        globals.index = random.randint(0, 2)
+        texts[globals.index] = correto
+        surfaces[globals.index] = font.render(correto, True, (0, 0, 0))
 
-        display.blit(surfaces[0], (x, 50))
-        display.blit(surfaces[1], (x + 100, 50))
-        # print(surfaces)
-        display.blit(surfaces[2], (x + 200, 50))
-        # rects = [pygame.draw.rect(surfaces[0], (255, 255, 255), [x, 60, 60, 20]),
-        #          pygame.draw.rect(surfaces[1], (255, 255, 255), [x + 100, 60, 60, 20]),
-        #          pygame.draw.rect(surfaces[2], (255, 255, 255), [x + 200, 60, 60, 20])]
+    display.blit(surfaces[0], (x, 50))
+    display.blit(surfaces[1], (x + 100, 50))
+    display.blit(surfaces[2], (x + 200, 50))
 
-        for evento in pygame.event.get():
-            print(evento)
-            if evento.type == pygame.MOUSEBUTTONDOWN:
-                x, y = evento.pos
-                print(evento)
-                if surfaces[globals.index].get_rect().collidepoint(x, y):
-                    print("teste")
-                    break
-
-    # return False
+    return True
 
 
 while True:
@@ -153,6 +137,13 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             exit()
+        if event.type == MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            pressed1, pressed2, pressed3 = pygame.mouse.get_pressed()
+            if len(rects) > 0:
+                if rects[globals.index].collidepoint(pos) and pressed1:
+                        print("testando")
+                        desafio1 = True
     desenhar_mapa(mapa)
     if frame_vil != 9:
         pygame.time.wait(tempo)
@@ -170,9 +161,12 @@ while True:
     if x_vil == 400:
         fase_run = True
     if fase_run:
-        desafio1 = gerar_desafio("Paralelograma")
-        # print(desafio1)
+        respostas = gerar_desafio("Paralelograma")
+        rects = [pygame.draw.rect(display, (255, 255, 255), [50, 60, 60, 20]),
+                 pygame.draw.rect(display, (255, 255, 255), [150, 60, 60, 20]),
+                 pygame.draw.rect(display, (255, 255, 255), [250, 60, 60, 20])]
         if desafio1:
+            print("teste")
             x_user += globals.speed
             if frame_user == 3:
                 frame_user = 2
@@ -180,10 +174,8 @@ while True:
                 frame_user += 1
             if x_user >= 400:
                 x_user = 0
-
         else:
-            display.blit(pygame.image.load(globals.get_path() + "\\View\\fase1\\btnError.png").convert_alpha(),
-                         (300, 300))
+            display.blit(pygame.image.load(globals.get_path() + "\\View\\fase1\\btnError.png").convert_alpha(),(300, 300))
     img = sprites_user[frame_user]
     display.blit(img, (x_user, y_user))
     img_vil = sprites_vil[frame_vil]
