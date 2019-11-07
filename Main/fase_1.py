@@ -323,6 +323,8 @@ while True:
                         if(resultado == ROXO):
                               fase = 3
                               cont = 4
+                        else:
+                              cont = 1
                   else:
                         cont = 1
             else:

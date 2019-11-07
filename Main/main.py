@@ -59,6 +59,10 @@ sprites_exp = [pygame.image.load(globals.get_path() + "\\View\\exp_1.png").conve
                pygame.image.load(globals.get_path() + "\\View\\exp_5.png").convert_alpha(),
                pygame.image.load(globals.get_path() + "\\View\\exp_6.png").convert_alpha()]
 
+btn1 = pygame.draw.rect(screen, (255, 255, 255), [50, 60, 60, 20])
+btn2 = pygame.draw.rect(screen, (255, 255, 255), [150, 60, 60, 20])
+btn3 = pygame.draw.rect(screen, (255, 255, 255), [250, 60, 60, 20])
+
 
 def desenhar_mapa(mapa):
     tile_rects = []
@@ -141,9 +145,19 @@ while True:
             pos = pygame.mouse.get_pos()
             pressed1, pressed2, pressed3 = pygame.mouse.get_pressed()
             if len(rects) > 0:
-                if rects[globals.index].collidepoint(pos) and pressed1:
+                if rects[0].collidepoint(pos) and pressed1:
                         print("testando")
                         desafio1 = True
+                        aux = False
+                elif rects[1].collidepoint(pos) and pressed1:
+                        print("testando")
+                        desafio1 = True
+                elif rects[2].collidepoint(pos) and pressed1:
+                        print("testando")
+                        desafio1 = True
+                elif event.type == QUIT:
+                        pygame.quit()
+                        exit()
     desenhar_mapa(mapa)
     if frame_vil != 9:
         pygame.time.wait(tempo)
@@ -162,11 +176,10 @@ while True:
         fase_run = True
     if fase_run:
         respostas = gerar_desafio("Paralelograma")
-        rects = [pygame.draw.rect(display, (255, 255, 255), [50, 60, 60, 20]),
-                 pygame.draw.rect(display, (255, 255, 255), [150, 60, 60, 20]),
-                 pygame.draw.rect(display, (255, 255, 255), [250, 60, 60, 20])]
+        rects = [pygame.draw.rect(screen, (255, 255, 255), [150, 110, 80, 40]),
+                 pygame.draw.rect(screen, (255, 255, 255), [450, 110, 80, 40]),
+                 pygame.draw.rect(screen, (255, 255, 255), [650, 110, 200, 40])]
         if desafio1:
-            print("teste")
             x_user += globals.speed
             if frame_user == 3:
                 frame_user = 2
