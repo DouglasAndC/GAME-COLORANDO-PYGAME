@@ -33,6 +33,7 @@ time_inicio = minu+ sec + horas
 
 print(time_inicio)
 
+
 dislpay = pygame.display.set_mode((screen_largura, screen_altura))
 pygame.display.set_caption('COLORANDO')
 screen = pygame.display.get_surface()
@@ -251,6 +252,40 @@ def placar():
         return 0
 
 
+def final():
+      flag = True
+      win = pygame.mixer.Sound(globals.get_path() + '\\Sound\\fase_concluida.wav')
+      win.play()
+      while True:
+         if(flag== False):
+            break
+         else:
+            for event in pygame.event.get():
+                pos = pygame.mouse.get_pos()
+                
+                pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
+                btn10 = botoes_menu(BLACK, 300, 600, 372 / 2, 149 / 2)
+                txtFase3 = pygame.image.load(globals.get_path() + '\\View\\menu\\txtParabens.png').convert_alpha()
+                btn11 = botoes_menu(BLACK, 300, 500, 372 / 2, 149 / 2)
+                print(txtFase3.get_size())
+                screen.blit(background, (0, 0))
+                novo_txtFase3 = pygame.transform.scale(txtFase3,(int(655/1.5),int(354/1.5)))
+                screen.blit(novo_txtFase3,(200,50))
+                screen.blit(dimensao_botao('btnSair'), (300, 600))
+                screen.blit(dimensao_botao('btnMenu'), (300, 500))
+                pygame.display.update()
+                if event.type == QUIT:
+                  pygame.quit()
+                  exit()
+                elif btn11.collidepoint(pos) and pressed1:
+                    flag = False
+                    break
+                elif btn10.collidepoint(pos) and pressed1:
+                    pygame.quit()
+                    exit()
+
+
+
 menu()
 
 pygame.display.flip()
@@ -287,10 +322,8 @@ while True:
             tempo_fase = time_fim - time_inicio
 
             score = 100000/tempo_fase
-
-            globals.
-            
-            dislpay = pygame.display.set_mode((screen_largura, screen_altura))
+            final()
+            display = pygame.display.set_mode((screen_largura, screen_altura))
             menu()
             cont = 1
     pygame.display.flip()
