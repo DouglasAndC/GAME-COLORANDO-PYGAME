@@ -168,9 +168,12 @@ def gerar_desafio(correto):
             display.blit(surfaces[0], (pos, 50))
             display.blit(surfaces[2], (pos + 150, 50))
             display.blit(surfaces[1], (pos + 250, 50))
-        display.blit(globals.surfaces[0], (pos, 50))
-        display.blit(globals.surfaces[2], (pos + 150, 50))
-        display.blit(globals.surfaces[1], (pos + 250, 50))
+        elif globals.flag == 2:
+            print("andando...")
+        else:
+            display.blit(globals.surfaces[0], (pos, 50))
+            display.blit(globals.surfaces[2], (pos + 150, 50))
+            display.blit(globals.surfaces[1], (pos + 250, 50))
     elif (cont == 2):
         if globals.flag == 1:
             surfaces.insert(0, font.render(correto, True, (0, 0, 0)))
@@ -178,9 +181,12 @@ def gerar_desafio(correto):
             display.blit(surfaces[2], (pos, 50))
             display.blit(surfaces[1], (pos + 150, 50))
             display.blit(surfaces[0], (pos + 250, 50))
-        display.blit(globals.surfaces[0], (pos, 50))
-        display.blit(globals.surfaces[1], (pos + 150, 50))
-        display.blit(globals.surfaces[2], (pos + 250, 50))
+        elif globals.flag == 2:
+            print("andando...")
+        else:
+            display.blit(globals.surfaces[0], (pos, 50))
+            display.blit(globals.surfaces[1], (pos + 150, 50))
+            display.blit(globals.surfaces[2], (pos + 250, 50))
     return True
 
 
@@ -255,6 +261,7 @@ while True:
                  btn2,
                  btn3]
         if desafio1:
+            globals.flag = 2
             mapa.att_mapa('Data\mapa')
             x_user += globals.speed
             if frame_user == 3:
@@ -262,16 +269,16 @@ while True:
             else:
                 frame_user += 1
             if x_user >= 400:
+                globals.flag = 1
                 x_user = 0
                 frame_user = 0
                 desafio1 = False
                 cont = 2
             texts = ['','','']
             surfaces = []
-            globals.flag = 1
             globals.surfaces = []
         elif desafio2:
-            globals.flag = 1
+            globals.flag = 2
             globals.surfaces = []
             mapa.att_mapa('Data\mapa')
             x_user += globals.speed
@@ -280,6 +287,7 @@ while True:
             else:
                 frame_user += 1
             if x_user >= 400:
+                globals.flag  = 1
                 x_user = 0
                 frame_user = 0
                 desafio2 = False
@@ -287,7 +295,7 @@ while True:
             texts = ['','','']
             surfaces = []
         elif desafio3:
-            globals.flag = 1
+            globals.flag = 2
             globals.surfaces = []
             mapa.att_mapa('Data\mapa')
             x_user += globals.speed
@@ -296,10 +304,12 @@ while True:
             else:
                 frame_user += 1
             if x_user >= 400:
+                globals.flag = 1
                 x_user = 0
                 frame_user = 0
                 desafio3 = False
-                
+                break
+            
         else:
             display.blit(pygame.image.load(globals.get_path() + "\\View\\fase1\\btnError.png").convert_alpha(),(300, 300))
     img = sprites_user[frame_user]

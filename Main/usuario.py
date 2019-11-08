@@ -1,7 +1,7 @@
 import globals
 
 
-class Usuario(object):
+class usuario(object):
 
     def __init__(self, nome):
         self.nome = nome

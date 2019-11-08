@@ -3,7 +3,7 @@ from pygame.locals import *
 from pygame import *
 import globals
 from datetime import datetime
-
+import usuario
 
 pygame.init()
 
@@ -208,8 +208,7 @@ def jogar():
                     exit()
                 elif len(texto) != 0:
                     if btn1.collidepoint(pos) and pressed1:
-                        
-                        return globals.salvar_usuario(globals.convert(texto))
+                        return usuario.usuario(globals.convert(texto))
                 elif btn6.collidepoint(pos) and pressed1:
                     click.play()
                     screen.fill((0, 0, 0))
@@ -324,7 +323,8 @@ while True:
             score = 1000 - tempo_fase
 
             novo_score = int(score)
-            
+            aux.score = novo_score
+            globals.salvar_usuario(aux)
             textponto = str(novo_score)
             final()
             display = pygame.display.set_mode((screen_largura, screen_altura))

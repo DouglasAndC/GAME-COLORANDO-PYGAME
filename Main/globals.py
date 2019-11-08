@@ -41,9 +41,8 @@ def ler_usuario():
     return data
 
 
-def salvar_usuario(user_name):
+def salvar_usuario(user1):
     data = ler_usuario()
-    user1 = Usuario(user_name)
     data.append({'level': user1.level, 'nome': user1.nome, 'score': user1.score})
     if len(data) > 1:
         data.sort(key=lambda x: x.get('score'), reverse=True)
