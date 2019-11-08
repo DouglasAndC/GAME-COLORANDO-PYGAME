@@ -41,6 +41,8 @@ continuar = True
 
 click = pygame.mixer.Sound(globals.get_path() + '\\Sound\\click.wav')
 
+
+
 def regras():
       flag = True
       while True:

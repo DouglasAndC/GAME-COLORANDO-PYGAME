@@ -17,22 +17,16 @@ BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
 
+tempo_fase = 0
 now = datetime.now()
 horas = now.hour
 minu = now.minute
 sec = now.second
-
-print(minu)
-print(sec)
-
 horas = horas*3600
-
 minu = minu*60
 
-time_inicio = minu+ sec + horas
-
+time_inicio = minu + sec + horas
 print(time_inicio)
-
 dislpay = pygame.display.set_mode((screen_largura, screen_altura))
 pygame.display.set_caption('COLORANDO')
 screen = pygame.display.get_surface()
@@ -214,6 +208,7 @@ def jogar():
                     exit()
                 elif len(texto) != 0:
                     if btn1.collidepoint(pos) and pressed1:
+                        
                         return globals.salvar_usuario(globals.convert(texto))
                 elif btn6.collidepoint(pos) and pressed1:
                     click.play()
@@ -251,6 +246,43 @@ def placar():
         return 0
 
 
+def final():
+      flag = True
+      win = pygame.mixer.Sound(globals.get_path() + '\\Sound\\fase_concluida.wav')
+      win.play()
+      while True:
+         if(flag== False):
+            break
+         else:
+            for event in pygame.event.get():
+                font = pygame.font.Font(pygame.font.match_font("Arial"), 100)
+                pos = pygame.mouse.get_pos()            
+                pressed1,pressed2,pressed3 = pygame.mouse.get_pressed()
+                btn10 = botoes_menu(BLACK, 300, 600, 372 / 2, 149 / 2)
+                txtFase3 = pygame.image.load(globals.get_path() + '\\View\\menu\\txtParabens.png').convert_alpha()
+                txtFase4 = pygame.image.load(globals.get_path() + '\\View\\menu\\txtPontuacao.png').convert_alpha()
+                btn11 = botoes_menu(BLACK, 300, 500, 372 / 2, 149 / 2)
+                Pontos = font.render(textponto, True, (255, 255, 255))
+                screen.blit(background, (0, 0))
+                novo_txtFase3 = pygame.transform.scale(txtFase3,(int(655/1.5),int(354/1.5)))
+                screen.blit(novo_txtFase3,(200,20))
+                screen.blit(txtFase4,(130,200))
+                screen.blit(Pontos, (300, 300))
+                screen.blit(dimensao_botao('btnSair'), (300, 600))
+                screen.blit(dimensao_botao('btnMenu'), (300, 500))
+                pygame.display.update()
+                if event.type == QUIT:
+                  pygame.quit()
+                  exit()
+                elif btn11.collidepoint(pos) and pressed1:
+                    flag = False
+                    break
+                elif btn10.collidepoint(pos) and pressed1:
+                    pygame.quit()
+                    exit()
+
+
+
 menu()
 
 pygame.display.flip()
@@ -277,20 +309,25 @@ while True:
         else:
             import fase_1
             fim = datetime.now()
-            horas = fim.hour
-            minu = fim.minute
-            sec = fim.second
-            horas = horas*3600
-            minu = minu*60
-            time_fim = minu+ sec + horas
+            horas2 = fim.hour
+            minu2 = fim.minute
+            sec2 = fim.second
+            horas2 = horas2*3600
+            minu2 = minu2*60
+            time_fim = minu2+ sec2 + horas2
 
+            print(time_inicio)
+            print(time_fim)
+            
             tempo_fase = time_fim - time_inicio
 
-            score = 100000/tempo_fase
+            score = 1000 - tempo_fase
 
-            globals.
+            novo_score = int(score)
             
-            dislpay = pygame.display.set_mode((screen_largura, screen_altura))
+            textponto = str(novo_score)
+            final()
+            display = pygame.display.set_mode((screen_largura, screen_altura))
             menu()
             cont = 1
     pygame.display.flip()
