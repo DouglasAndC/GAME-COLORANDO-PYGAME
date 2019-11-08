@@ -5,6 +5,7 @@ import globals
 from datetime import datetime
 import usuario
 
+
 pygame.init()
 
 screen_largura = 800
@@ -302,10 +303,12 @@ while True:
     elif cont == 4:
         cont = cont - placar()
     elif cont == 5:
-        aux = jogar()
-        if aux == 0:
+        globals.aux = jogar()
+        if globals.aux == 0:        
             cont = cont - 4
         else:
+            print("a")
+            execfile(globals.get_path() + '\\Main\\fase_1.py')
             import fase_1
             fim = datetime.now()
             horas2 = fim.hour
@@ -323,11 +326,11 @@ while True:
             score = 1000 - tempo_fase
 
             novo_score = int(score)
-            aux.score = novo_score
-            globals.salvar_usuario(aux)
+            globals.aux.score = novo_score
+            globals.salvar_usuario(globals.aux)
             textponto = str(novo_score)
-            final()
             display = pygame.display.set_mode((screen_largura, screen_altura))
+            final()
             menu()
             cont = 1
     pygame.display.flip()
