@@ -12,7 +12,6 @@ clock = pygame.time.Clock()
 display = pygame.Surface((400, 300))
 
 BLACK = (0, 0, 0)
-
 mapa = mapa('Data\\mapa')
 #pygame.mixer.music.load(globals.get_path() + "\\Sound\\gameplay.mpeg")
 #pygame.mixer.music.play()
@@ -32,7 +31,7 @@ globals.speed = 5
 tempo = 800
 rects = []
 surfaces = []
-texts = []
+texts = ["","",""]
 i_correto = 5
 explodiu = False
 desafio1 = False
@@ -145,36 +144,41 @@ def explodir():
     #pygame.mixer.music.play(5, 10)
     return True
 
-
 def gerar_desafio(correto):
-    formas = ["Quadrado", "Círculo", "Triângulo",
-              "Hexágono", "Pentágono", "Retângulo",
-              "Trapézio", "Paralelograma", "Losango", "Heptágono"]
-    font = pygame.font.Font(pygame.font.match_font("Arial"), 20)
-    x = 50
-    if len(surfaces) != 3:
-        for i in range(0, 3):
-            text = formas[random.randint(0, len(formas) - 1)]
-            while texts.__contains__(text) or text == correto:
-                text = formas[random.randint(0, len(formas) - 1)]
-            texts.append(text)
-            if text != correto:
-                newSurface = font.render(text, True, (0, 0, 0))
-                surfaces.append(newSurface)
-    if not texts.__contains__(correto):
-        globals.index = random.randint(0, 2)
-        texts[globals.index] = correto
-        surfaces[globals.index] = font.render(correto, True, (0, 0, 0))
-        
-    if (cont == 1 or cont == 3):
-        display.blit(surfaces[0], (x, 50))
-        display.blit(surfaces[2], (x + 100, 50))
-        display.blit(surfaces[globals.index], (x + 200, 50))
-    elif (cont == 2):
-        display.blit(surfaces[globals.index], (x, 50))
-        display.blit(surfaces[1], (x + 100, 50))
-        display.blit(surfaces[0], (x + 200, 50))
+    pos = 25
+    font = pygame.font.Font(pygame.font.match_font("Arial"), 18)
+    if globals.flag == 1:
+        forma1 = ["Quadrado", "Círculo"]
+        forma2 = ["Hexágono", "Pentágono"]
+        forma3 = ["Retângulo","Losango"]
+        formas = [forma1,forma2,forma3]
 
+        formas_escolhida = formas[random.randint(0, 2)]
+        for i in formas_escolhida:
+            surfaces.append(font.render(i, True, (0, 0, 0)))
+    if globals.flag == 1:
+        globals.surfaces = surfaces
+
+    if (cont == 1 or cont == 3):
+        if globals.flag == 1:
+            surfaces.insert(1, font.render(correto, True, (0, 0, 0)))
+            globals.flag = 0
+            display.blit(surfaces[0], (pos, 50))
+            display.blit(surfaces[2], (pos + 150, 50))
+            display.blit(surfaces[1], (pos + 250, 50))
+        display.blit(globals.surfaces[0], (pos, 50))
+        display.blit(globals.surfaces[2], (pos + 150, 50))
+        display.blit(globals.surfaces[1], (pos + 250, 50))
+    elif (cont == 2):
+        if globals.flag == 1:
+            surfaces.insert(0, font.render(correto, True, (0, 0, 0)))
+            globals.flag = 0
+            display.blit(surfaces[2], (pos, 50))
+            display.blit(surfaces[1], (pos + 150, 50))
+            display.blit(surfaces[0], (pos + 250, 50))
+        display.blit(globals.surfaces[0], (pos, 50))
+        display.blit(globals.surfaces[1], (pos + 150, 50))
+        display.blit(globals.surfaces[2], (pos + 250, 50))
     return True
 
 
@@ -260,7 +264,13 @@ while True:
                 frame_user = 0
                 desafio1 = False
                 cont = 2
+            texts = ['','','']
+            surfaces = []
+            globals.flag = 1
+            globals.surfaces = []
         elif desafio2:
+            globals.flag = 1
+            globals.surfaces = []
             mapa.att_mapa('Data\mapa')
             x_user += globals.speed
             if frame_user == 3:
@@ -272,7 +282,11 @@ while True:
                 frame_user = 0
                 desafio2 = False
                 cont = 3
+            texts = ['','','']
+            surfaces = []
         elif desafio3:
+            globals.flag = 1
+            globals.surfaces = []
             mapa.att_mapa('Data\mapa')
             x_user += globals.speed
             if frame_user == 3:

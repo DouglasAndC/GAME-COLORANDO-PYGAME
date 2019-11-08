@@ -13,7 +13,8 @@ def get_path():
 
 speed = 1.1
 index = 0
-
+flag = 1
+surfaces = []
 def convert(s):
     new = ""
     for x in s:
