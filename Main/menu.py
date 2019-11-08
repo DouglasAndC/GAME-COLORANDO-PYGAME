@@ -307,8 +307,6 @@ while True:
         if globals.aux == 0:        
             cont = cont - 4
         else:
-            print("a")
-            execfile(globals.get_path() + '\\Main\\fase_1.py')
             import fase_1
             fim = datetime.now()
             horas2 = fim.hour
